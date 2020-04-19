@@ -1,0 +1,9 @@
+CVBuilder.Domain/bin/*
+CVBuilder.Domain/obj/*
+CVBuilder.Repository/bin/*
+CVBuilder.Repository/obj/*
+CVBuilder.Service/bin/*
+CVBuilder.Service/obj/*
+CVBuilder.WebAPI/bin/*
+CVBuilder.WebAPI/obj/*
+.vscode/*
