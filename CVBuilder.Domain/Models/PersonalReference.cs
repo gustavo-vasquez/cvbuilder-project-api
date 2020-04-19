@@ -10,14 +10,17 @@ namespace CVBuilder.Domain.Models
         public int PersonalReferenceId { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string Company { get; set; }
 
         [Required]
+        [MaxLength(200)]
         public string ContactPerson { get; set; }
         public short? AreaCode { get; set; }
         public int? Telephone { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string Email { get; set; }
         public bool IsVisible { get; set; }
 

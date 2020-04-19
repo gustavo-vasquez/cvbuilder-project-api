@@ -10,6 +10,26 @@ namespace CVBuilder.Repository
             
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Template>().HasData(new Template
+            {
+                TemplateId = 1,
+                Name = "Classic",
+                Path = "/img/templates/classic.png"
+            }, new Template
+            {
+                TemplateId = 2,
+                Name = "Elegant",
+                Path = "/img/templates/elegant.png"
+            }, new Template
+            {
+                TemplateId = 3,
+                Name = "Modern",
+                Path = "/img/templates/modern.png"
+            });
+        }
+
         public DbSet<Certificate> Certificates { get; set; }
         public DbSet<Curriculum> Curriculum { get; set; }
         public DbSet<CustomSection> CustomSections { get; set; }

@@ -10,6 +10,7 @@ namespace CVBuilder.Domain.Models
         public int CustomSectionId { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string SectionName { get; set; }
 
         [Required]

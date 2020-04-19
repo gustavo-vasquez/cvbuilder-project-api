@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using CVBuilder.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace CVBuilder.WebAPI
 {
@@ -26,6 +28,19 @@ namespace CVBuilder.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddDbContext<CVBuilderDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("CVBuilderConnection"),
+                    sqlServerOptionsAction: sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 5,
+                            maxRetryDelay: TimeSpan.FromSeconds(15),
+                            errorNumbersToAdd: null
+                        ).MigrationsAssembly("CVBuilder.Repository");
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

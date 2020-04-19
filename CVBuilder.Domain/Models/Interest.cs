@@ -10,6 +10,7 @@ namespace CVBuilder.Domain.Models
         public int InterestId { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string Name { get; set; }
         public bool IsVisible { get; set; }
 

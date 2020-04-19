@@ -11,11 +11,13 @@ namespace CVBuilder.Domain.Models
         public int UserId { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string Email { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string Password { get; set; }
 
-        public virtual ICollection<Curriculum> Curriculum { get; set; }
+        public Curriculum Curriculum { get; set; }
     }
 }

@@ -9,7 +9,12 @@ namespace CVBuilder.Domain.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TemplateId { get; set; }
+
+        [Required]
+        [MaxLength(100)]
         public string Name { get; set; }
+
+        [Required]
         public string Path { get; set; }
         public virtual ICollection<Curriculum> Curriculum { get; set; }
     }
