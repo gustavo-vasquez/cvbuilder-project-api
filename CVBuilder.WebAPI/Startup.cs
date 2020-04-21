@@ -12,6 +12,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using CVBuilder.Repository;
 using Microsoft.EntityFrameworkCore;
+using CVBuilder.Repository.Repositories.Interfaces;
+using CVBuilder.Repository.Repositories.Implementations;
+using CVBuilder.Service.Interfaces;
+using CVBuilder.Service.Implementations;
+using CVBuilder.Service.DTOs;
 
 namespace CVBuilder.WebAPI
 {
@@ -41,6 +46,19 @@ namespace CVBuilder.WebAPI
                         ).MigrationsAssembly("CVBuilder.Repository");
                     });
             });
+
+            services.AddScoped<IUnitOfWorkRepository,UnitOfWorkRepository>();
+            services.AddTransient<ICurriculumService,CurriculumService>();
+            services.AddTransient<IPersonalDetailService,PersonalDetailService>();
+            services.AddTransient<IService<StudyDTO>,StudyService>();
+            services.AddTransient<IService<WorkExperienceDTO>,WorkExperienceService>();
+            services.AddTransient<IService<CertificateDTO>,CertificateService>();
+            services.AddTransient<IService<LanguageDTO>,LanguageService>();
+            services.AddTransient<IService<SkillDTO>,SkillService>();
+            services.AddTransient<IService<InterestDTO>,InterestService>();
+            services.AddTransient<IService<PersonalReferenceDTO>,PersonalReferenceService>();
+            services.AddTransient<IService<CustomSectionDTO>,CustomSectionService>();
+            services.AddTransient<ITemplateService,TemplateService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
