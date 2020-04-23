@@ -1,11 +1,11 @@
-﻿namespace CVBuilder.Service.DTOs
+﻿namespace CVBuilder.Repository.DTOs
 {
-    public class WorkExperienceDTO
+    public class StudyDTO
     {
-        public int WorkExperienceId { get; set; }
-        public string Job { get; set; }
+        public int StudyId { get; set; }
+        public string Title { get; set; }
+        public string Institute { get; set; }
         public string City { get; set; }
-        public string Company { get; set; }
         public string StartMonth { get; set; }
         public int StartYear { get; set; }
         public string EndMonth { get; set; }

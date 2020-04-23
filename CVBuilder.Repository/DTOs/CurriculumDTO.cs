@@ -1,7 +1,8 @@
-﻿namespace CVBuilder.Service.DTOs
+namespace CVBuilder.Repository.DTOs
 {
-    public class SectionVisibilityDTO
+    public class CurriculumDTO
     {
+        public int CurriculumId { get; set; }
         public bool StudiesIsVisible { get; set; }
         public bool WorkExperiencesIsVisible { get; set; }
         public bool CertificatesIsVisible { get; set; }

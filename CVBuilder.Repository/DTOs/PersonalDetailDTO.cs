@@ -1,4 +1,4 @@
-﻿namespace CVBuilder.Service.DTOs
+﻿namespace CVBuilder.Repository.DTOs
 {
     public class PersonalDetailDTO
     {

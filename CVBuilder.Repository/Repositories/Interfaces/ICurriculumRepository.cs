@@ -1,4 +1,5 @@
 using CVBuilder.Domain.Models;
+using CVBuilder.Repository.DTOs;
 
 namespace CVBuilder.Repository.Repositories.Interfaces
 {
@@ -6,6 +7,6 @@ namespace CVBuilder.Repository.Repositories.Interfaces
     {
         int Create(int userId);
         int GetByUserId(int userId);
-        Curriculum GetById(int curriculumId);
+        CurriculumDTO GetById(int curriculumId);
     }
 }

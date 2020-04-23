@@ -17,6 +17,7 @@ using CVBuilder.Repository.Repositories.Implementations;
 using CVBuilder.Service.Interfaces;
 using CVBuilder.Service.Implementations;
 using CVBuilder.Service.DTOs;
+using AutoMapper;
 
 namespace CVBuilder.WebAPI
 {
@@ -59,6 +60,8 @@ namespace CVBuilder.WebAPI
             services.AddTransient<IService<PersonalReferenceDTO>,PersonalReferenceService>();
             services.AddTransient<IService<CustomSectionDTO>,CustomSectionService>();
             services.AddTransient<ITemplateService,TemplateService>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

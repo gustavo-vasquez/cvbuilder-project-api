@@ -1,8 +1,8 @@
-﻿namespace CVBuilder.Service.DTOs
+﻿namespace CVBuilder.Repository.DTOs
 {
-    public class LanguageDTO
+    public class SkillDTO
     {
-        public int LanguageId { get; set; }
+        public int SkillId { get; set; }
         public string Name { get; set; }
         public string Level { get; set; }
         public bool IsVisible { get; set; }

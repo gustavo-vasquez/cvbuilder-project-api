@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CVBuilder.Service.DTOs
+namespace CVBuilder.Repository.DTOs
 {
     public class FinishedDTO
     {

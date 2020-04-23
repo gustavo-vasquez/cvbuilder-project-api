@@ -1,34 +1,31 @@
+using System.Collections.Generic;
 using System.Linq;
 using CVBuilder.Domain.Models;
+using CVBuilder.Repository.Automapper;
 using CVBuilder.Repository.Repositories.Interfaces;
 
 namespace CVBuilder.Repository.Repositories.Implementations
 {
-    public class Repository<T> : ContextRepository, IRepository<T> where T : class
+    public class Repository<D,T> : ContextRepository, IRepository<D,T> where D : class where T : class
     {
-        /* private readonly CVBuilderDbContext _context;
-
-        public StudiesRepository(CVBuilderDbContext context)
-        {
-            _context = context;
-        } */
         public Repository(CVBuilderDbContext context) : base (context)
         {
         }
 
-        public int Create(T data, int curriculumId)
+        public int Create(D data, int curriculumId)
         {
-            _context.Set<T>().Add(data);
+            T entity = Mapping.Mapper.Map<D,T>(data);
+            _context.Set<T>().Add(entity);
             return _context.SaveChanges();
         }
 
-        public void Update(T data, string keyProperty)
+        public void Update(D data, string keyProperty)
         {
             T entity = this.GetById((int)data.GetType().GetProperty(keyProperty).GetValue(data));
 
             if(entity != null)
             {
-                entity = data;
+                entity = Mapping.Mapper.Map<D,T>(data);
                 _context.SaveChanges();
             }
         }
@@ -51,28 +48,26 @@ namespace CVBuilder.Repository.Repositories.Implementations
             return _context.Set<T>().Find(id);
         }
 
-        public IQueryable<T> GetAll(System.Linq.Expressions.Expression<System.Func<T,bool>> predicate)
+        public IEnumerable<D> GetAll(int curriculumId)
         {
-            //return _context.Set<TEntity>().Where(x => (int)x.GetType().GetProperty("Id_Curriculum").GetValue(x) == curriculumId);
-            return _context.Set<T>().Where(predicate);
-        }
-        public void lol(Study asd, int curriculumId)
-        {
-            this.GetAll(Study => asd.Id_Curriculum == curriculumId);
+            IQueryable<T> entity = _context.Set<T>().Where(x => (int)x.GetType().GetProperty("Id_Curriculum").GetValue(x) == curriculumId);
+            return Mapping.Mapper.Map<IQueryable<T>,IEnumerable<D>>(entity);
         }
 
-        public IQueryable<T> GetAllVisible(System.Linq.Expressions.Expression<System.Func<T,bool>> predicate)
+        public IEnumerable<D> GetAllVisible(int curriculumId)
         {
-            /* return _context.Set<TEntity>().Where(x =>
+            //Expression<System.Func<T,bool>> predicate
+            IQueryable<T> entity = _context.Set<T>().Where(x =>
                 (int)x.GetType().GetProperty("Id_Curriculum").GetValue(x) == curriculumId
-                && (bool)x.GetType().GetProperty("IsVisible").GetValue(x)); */
-            return _context.Set<T>().Where(predicate);
+                && (bool)x.GetType().GetProperty("IsVisible").GetValue(x));
+
+            return Mapping.Mapper.Map<IQueryable<T>,IEnumerable<D>>(entity);
         }
 
-        public T GetLast(System.Linq.Expressions.Expression<System.Func<T,int>> predicate)
+        public D GetLast()
         {
-            //return _context.Set<TEntity>().OrderByDescending(x => (int)x.GetType().GetProperty("StudyId").GetValue(x)).First();
-            return _context.Set<T>().OrderByDescending(predicate).First();
+            T entity = _context.Set<T>().OrderByDescending(x => (int)x.GetType().GetProperty("StudyId").GetValue(x)).First();
+            return Mapping.Mapper.Map<T,D>(entity);
         }
 
         public void ToggleVisibility(string sectionIsVisible, int curriculumId)
