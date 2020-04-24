@@ -18,7 +18,7 @@ namespace CVBuilder.Service.Implementations
 
         public void Update(InterestDTO dto)
         {
-            _UnitOfWork.Interest.Update(dto, "InterestId");
+            _UnitOfWork.Interest.Update(dto, nameof(dto.InterestId));
         }
 
         public int Delete(int id)

@@ -19,7 +19,7 @@ namespace CVBuilder.Service.Implementations
 
         public void Update(StudyDTO dto)
         {
-            _UnitOfWork.Study.Update(dto, "StudyId");
+            _UnitOfWork.Study.Update(dto, nameof(dto.StudyId));
         }
 
         public int Delete(int id)

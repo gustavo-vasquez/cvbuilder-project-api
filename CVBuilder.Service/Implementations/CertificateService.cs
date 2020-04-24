@@ -19,7 +19,7 @@ namespace CVBuilder.Service.Implementations
 
         public void Update(CertificateDTO dto)
         {
-            _UnitOfWork.Certificate.Update(dto, "CertificateId");
+            _UnitOfWork.Certificate.Update(dto, nameof(dto.CertificateId));
         }
 
         public int Delete(int id)

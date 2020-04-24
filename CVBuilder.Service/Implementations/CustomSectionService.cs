@@ -18,7 +18,7 @@ namespace CVBuilder.Service.Implementations
 
         public void Update(CustomSectionDTO dto)
         {
-            _UnitOfWork.CustomSection.Update(dto, "CustomSectionId");
+            _UnitOfWork.CustomSection.Update(dto, nameof(dto.CustomSectionId));
         }
 
         public int Delete(int id)

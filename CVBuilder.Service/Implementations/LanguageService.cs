@@ -19,7 +19,7 @@ namespace CVBuilder.Service.Implementations
 
         public void Update(LanguageDTO dto)
         {
-            _UnitOfWork.Language.Update(dto, "LanguageId");
+            _UnitOfWork.Language.Update(dto, nameof(dto.LanguageId));
         }
 
         public int Delete(int id)

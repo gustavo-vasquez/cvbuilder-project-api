@@ -18,7 +18,7 @@ namespace CVBuilder.Service.Implementations
 
         public void Update(PersonalReferenceDTO dto)
         {
-            _UnitOfWork.PersonalReference.Update(dto, "PersonalReferenceId");
+            _UnitOfWork.PersonalReference.Update(dto, nameof(dto.PersonalReferenceId));
         }
 
         public int Delete(int id)

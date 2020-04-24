@@ -17,6 +17,7 @@ using CVBuilder.Repository.Repositories.Implementations;
 using CVBuilder.Service.Interfaces;
 using CVBuilder.Service.Implementations;
 using AutoMapper;
+using CVBuilder.Repository.DTOs;
 
 namespace CVBuilder.WebAPI
 {
@@ -50,6 +51,14 @@ namespace CVBuilder.WebAPI
             services.AddScoped<IUnitOfWorkRepository,UnitOfWorkRepository>();
             services.AddTransient<ICurriculumService,CurriculumService>();
             services.AddTransient<IPersonalDetailService,PersonalDetailService>();
+            services.AddTransient<IService<StudyDTO>,StudyService>();
+            services.AddTransient<IService<WorkExperienceDTO>,WorkExperienceService>();
+            services.AddTransient<IService<CertificateDTO>,CertificateService>();
+            services.AddTransient<IService<LanguageDTO>,LanguageService>();
+            services.AddTransient<IService<SkillDTO>,SkillService>();
+            services.AddTransient<IService<InterestDTO>,InterestService>();
+            services.AddTransient<IService<PersonalReferenceDTO>,PersonalReferenceService>();
+            services.AddTransient<IService<CustomSectionDTO>,CustomSectionService>();
             services.AddTransient<ITemplateService,TemplateService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

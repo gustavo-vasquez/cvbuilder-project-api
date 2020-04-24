@@ -19,7 +19,7 @@ namespace CVBuilder.Service.Implementations
 
         public void Update(WorkExperienceDTO dto)
         {
-            _UnitOfWork.WorkExperience.Update(dto, "WorkExperienceId");
+            _UnitOfWork.WorkExperience.Update(dto, nameof(dto.WorkExperienceId));
         }
 
         public int Delete(int id)
