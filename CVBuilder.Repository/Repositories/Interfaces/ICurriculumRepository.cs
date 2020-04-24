@@ -8,5 +8,6 @@ namespace CVBuilder.Repository.Repositories.Interfaces
         int Create(int userId);
         int GetByUserId(int userId);
         CurriculumDTO GetById(int curriculumId);
+        SectionVisibilityDTO GetIsVisibleStates(int curriculumId);
     }
 }

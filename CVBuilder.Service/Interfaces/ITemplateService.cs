@@ -1,4 +1,4 @@
-using CVBuilder.Service.DTOs;
+using CVBuilder.Repository.DTOs;
 
 namespace CVBuilder.Service.Interfaces
 {

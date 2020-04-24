@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using CVBuilder.Repository.DTOs;
 using CVBuilder.Repository.Repositories.Interfaces;
-using CVBuilder.Service.DTOs;
+using CVBuilder.Service.Helpers;
 using CVBuilder.Service.Interfaces;
 
 namespace CVBuilder.Service.Implementations
@@ -11,34 +12,76 @@ namespace CVBuilder.Service.Implementations
         {
         }
 
-        public int Create(WorkExperienceDTO data, int curriculumId)
+        public int Create(WorkExperienceDTO dto)
         {
-            throw new System.NotImplementedException();
+            return _UnitOfWork.WorkExperience.Create(dto);
+        }
+
+        public void Update(WorkExperienceDTO dto)
+        {
+            _UnitOfWork.WorkExperience.Update(dto, "WorkExperienceId");
         }
 
         public int Delete(int id)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public List<SummaryBlockDTO> GetAllBlocks(int curriculumId)
-        {
-            throw new System.NotImplementedException();
+            return _UnitOfWork.WorkExperience.Delete(id);
         }
 
         public WorkExperienceDTO GetById(int id)
         {
-            throw new System.NotImplementedException();
+            return _UnitOfWork.WorkExperience.GetById(id);
+        }
+
+        public IEnumerable<WorkExperienceDTO> GetAll(int curriculumId)
+        {
+            return _UnitOfWork.WorkExperience.GetAll(curriculumId);
+        }
+
+        public IEnumerable<WorkExperienceDTO> GetAllVisible(int curriculumId)
+        {
+            return _UnitOfWork.WorkExperience.GetAllVisible(curriculumId);
+        }
+
+        public List<SummaryBlockDTO> GetAllBlocks(int curriculumId)
+        {
+            IEnumerable<WorkExperienceDTO> allWorkExperiences = _UnitOfWork.WorkExperience.GetAll(curriculumId);
+            List<SummaryBlockDTO> workExperienceBlocks = new List<SummaryBlockDTO>();
+
+            foreach (WorkExperienceDTO workExperience in allWorkExperiences)
+            {
+                workExperienceBlocks.Add(new SummaryBlockDTO()
+                {
+                    SummaryId = workExperience.WorkExperienceId,
+                    Title = workExperience.Job + " en " + workExperience.Company,
+                    StateInTime = GlobalVariables.GenerateStateInTimeFormat(workExperience.StartMonth, workExperience.StartYear, workExperience.EndMonth, workExperience.EndYear),
+                    IsVisible = workExperience.IsVisible
+                });
+            }
+
+            return workExperienceBlocks;
         }
 
         public SummaryBlockDTO GetSummaryBlock(int id)
         {
-            throw new System.NotImplementedException();
+            WorkExperienceDTO workExperience;
+
+            if (id > 0)
+                workExperience = _UnitOfWork.WorkExperience.GetById(id);
+            else
+                workExperience = _UnitOfWork.WorkExperience.GetLast();
+
+            return new SummaryBlockDTO()
+            {
+                SummaryId = workExperience.WorkExperienceId,
+                Title = workExperience.Job + " en " + workExperience.Company,
+                StateInTime = GlobalVariables.GenerateStateInTimeFormat(workExperience.StartMonth, workExperience.StartYear, workExperience.EndMonth, workExperience.EndYear),
+                IsVisible = workExperience.IsVisible
+            };
         }
 
-        public void Update(WorkExperienceDTO data, int curriculumId)
+        public void ToggleVisibility(int curriculumId)
         {
-            throw new System.NotImplementedException();
+            _UnitOfWork.WorkExperience.ToggleVisibility("WorkExperiencesIsVisible", curriculumId);
         }
     }
 }

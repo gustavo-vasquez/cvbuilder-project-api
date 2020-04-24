@@ -4,10 +4,10 @@ namespace CVBuilder.Repository.Repositories.Interfaces
 {
     public interface IRepository<D,T> where D : class where T : class
     {
-        int Create(D data, int curriculumId);
+        int Create(D data);
         void Update(D data, string keyProperty);
         int Delete(int id);
-        T GetById(int id);
+        D GetById(int id);
         IEnumerable<D> GetAll(int curriculumId);
         IEnumerable<D> GetAllVisible(int curriculumId);
         D GetLast();

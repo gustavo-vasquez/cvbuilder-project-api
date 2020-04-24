@@ -4,18 +4,16 @@ namespace CVBuilder.Repository.DTOs
 {
     public class FinishedDTO
     {
-        public int TemplateId { get; set; }
-        public string Name { get; set; }
-        public string PreviewPath { get; set; }
         public PersonalDetailDTO PersonalDetails { get; set; }
-        public List<StudyDTO> Studies { get; set; }
-        public List<WorkExperienceDTO> WorkExperiences { get; set; }
-        public List<CertificateDTO> Certificates { get; set; }
-        public List<LanguageDTO> Languages { get; set; }
-        public List<SkillDTO> Skills { get; set; }
-        public List<InterestDTO> Interests { get; set; }
-        public List<PersonalReferenceDTO> PersonalReferences { get; set; }
-        public List<CustomSectionDTO> CustomSections { get; set; }
+        public IEnumerable<StudyDTO> Studies { get; set; }
+        public IEnumerable<WorkExperienceDTO> WorkExperiences { get; set; }
+        public IEnumerable<CertificateDTO> Certificates { get; set; }
+        public IEnumerable<LanguageDTO> Languages { get; set; }
+        public IEnumerable<SkillDTO> Skills { get; set; }
+        public IEnumerable<InterestDTO> Interests { get; set; }
+        public IEnumerable<PersonalReferenceDTO> PersonalReferences { get; set; }
+        public IEnumerable<CustomSectionDTO> CustomSections { get; set; }
+        public TemplateDTO Templates { get; set; }
         public SectionVisibilityDTO SectionVisibility { get; set; }
     }
 }

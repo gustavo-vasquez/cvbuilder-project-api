@@ -1,11 +1,11 @@
-using CVBuilder.Service.DTOs;
+using CVBuilder.Repository.DTOs;
 
 namespace CVBuilder.Service.Interfaces
 {
     public interface IPersonalDetailService
     {
-        int Create(PersonalDetailDTO dto, int curriculumId);
-        int Update(PersonalDetailDTO dto, int curriculumId);
+        int Create(PersonalDetailDTO dto);
+        int Update(PersonalDetailDTO dto);
         PersonalDetailDTO GetByCurriculumId(int curriculumId);
     }
 }

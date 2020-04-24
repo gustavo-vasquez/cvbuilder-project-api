@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using CVBuilder.Repository.DTOs;
 using CVBuilder.Repository.Repositories.Interfaces;
-using CVBuilder.Service.DTOs;
+using CVBuilder.Service.Helpers;
 using CVBuilder.Service.Interfaces;
 
 namespace CVBuilder.Service.Implementations
@@ -11,34 +12,76 @@ namespace CVBuilder.Service.Implementations
         {
         }
 
-        public int Create(LanguageDTO data, int curriculumId)
+        public int Create(LanguageDTO dto)
         {
-            throw new System.NotImplementedException();
+            return _UnitOfWork.Language.Create(dto);
+        }
+
+        public void Update(LanguageDTO dto)
+        {
+            _UnitOfWork.Language.Update(dto, "LanguageId");
         }
 
         public int Delete(int id)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public List<SummaryBlockDTO> GetAllBlocks(int curriculumId)
-        {
-            throw new System.NotImplementedException();
+            return _UnitOfWork.Language.Delete(id);
         }
 
         public LanguageDTO GetById(int id)
         {
-            throw new System.NotImplementedException();
+            return _UnitOfWork.Language.GetById(id);
+        }
+
+        public IEnumerable<LanguageDTO> GetAll(int curriculumId)
+        {
+            return _UnitOfWork.Language.GetAll(curriculumId);
+        }
+
+        public IEnumerable<LanguageDTO> GetAllVisible(int curriculumId)
+        {
+            return _UnitOfWork.Language.GetAllVisible(curriculumId);
+        }
+
+        public List<SummaryBlockDTO> GetAllBlocks(int curriculumId)
+        {
+            IEnumerable<LanguageDTO> allLanguages = _UnitOfWork.Language.GetAll(curriculumId);
+            List<SummaryBlockDTO> languageBlocks = new List<SummaryBlockDTO>();
+
+            foreach (LanguageDTO language in allLanguages)
+            {
+                languageBlocks.Add(new SummaryBlockDTO()
+                {
+                    SummaryId = language.LanguageId,
+                    Title = language.Name,
+                    StateInTime = "(" + LevelOptions.LevelComboBox[language.Level] + ")",
+                    IsVisible = language.IsVisible
+                });
+            }
+
+            return languageBlocks;
         }
 
         public SummaryBlockDTO GetSummaryBlock(int id)
         {
-            throw new System.NotImplementedException();
+            LanguageDTO language;
+
+            if (id > 0)
+                language = _UnitOfWork.Language.GetById(id);
+            else
+                language = _UnitOfWork.Language.GetLast();
+
+            return new SummaryBlockDTO()
+            {
+                SummaryId = language.LanguageId,
+                Title = language.Name,
+                StateInTime = "(" + LevelOptions.LevelComboBox[language.Level] + ")",
+                IsVisible = language.IsVisible
+            };
         }
 
-        public void Update(LanguageDTO data, int curriculumId)
+        public void ToggleVisibility(int curriculumId)
         {
-            throw new System.NotImplementedException();
+            _UnitOfWork.Language.ToggleVisibility("LanguagesIsVisible", curriculumId);
         }
     }
 }

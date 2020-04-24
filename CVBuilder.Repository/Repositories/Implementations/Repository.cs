@@ -12,7 +12,7 @@ namespace CVBuilder.Repository.Repositories.Implementations
         {
         }
 
-        public int Create(D data, int curriculumId)
+        public int Create(D data)
         {
             T entity = Mapping.Mapper.Map<D,T>(data);
             _context.Set<T>().Add(entity);
@@ -21,7 +21,7 @@ namespace CVBuilder.Repository.Repositories.Implementations
 
         public void Update(D data, string keyProperty)
         {
-            T entity = this.GetById((int)data.GetType().GetProperty(keyProperty).GetValue(data));
+            T entity = this.GetByIdPrivate((int)data.GetType().GetProperty(keyProperty).GetValue(data));
 
             if(entity != null)
             {
@@ -32,7 +32,7 @@ namespace CVBuilder.Repository.Repositories.Implementations
 
         public int Delete(int id)
         {
-            T entity = this.GetById(id);
+            T entity = this.GetByIdPrivate(id);
 
             if(entity != null)
             {
@@ -43,9 +43,15 @@ namespace CVBuilder.Repository.Repositories.Implementations
             return 0;
         }
 
-        public T GetById(int id)
+        private T GetByIdPrivate(int id)
         {
             return _context.Set<T>().Find(id);
+        }
+
+        public D GetById(int id)
+        {
+            T entity = _context.Set<T>().Find(id);
+            return Mapping.Mapper.Map<T,D>(entity);
         }
 
         public IEnumerable<D> GetAll(int curriculumId)

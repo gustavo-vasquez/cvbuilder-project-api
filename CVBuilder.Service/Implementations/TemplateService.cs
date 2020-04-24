@@ -1,5 +1,5 @@
+using CVBuilder.Repository.DTOs;
 using CVBuilder.Repository.Repositories.Interfaces;
-using CVBuilder.Service.DTOs;
 using CVBuilder.Service.Interfaces;
 
 namespace CVBuilder.Service.Implementations
@@ -10,19 +10,19 @@ namespace CVBuilder.Service.Implementations
         {
         }
 
-        public void ChangeTemplate(string path, int curriculumId, int userId)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public TemplateDTO GetByUserId(int userId)
         {
-            throw new System.NotImplementedException();
+            return _UnitOfWork.Template.GetByUserId(userId);
         }
 
         public string GetPreviewPath(int userId)
         {
-            throw new System.NotImplementedException();
+            return _UnitOfWork.Template.GetPreviewPath(userId);
+        }
+
+        public void ChangeTemplate(string path, int curriculumId, int userId)
+        {
+            _UnitOfWork.Template.ChangeTemplate(path, curriculumId, userId);
         }
     }
 }

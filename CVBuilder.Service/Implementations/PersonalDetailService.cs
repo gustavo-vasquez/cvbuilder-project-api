@@ -1,5 +1,5 @@
+using CVBuilder.Repository.DTOs;
 using CVBuilder.Repository.Repositories.Interfaces;
-using CVBuilder.Service.DTOs;
 using CVBuilder.Service.Interfaces;
 
 namespace CVBuilder.Service.Implementations
@@ -10,31 +10,24 @@ namespace CVBuilder.Service.Implementations
         {
         }
 
-        public int Create(PersonalDetailDTO dto, int curriculumId)
+        public int Create(PersonalDetailDTO dto)
         {
-            /* PersonalDetail data = Mapping.Mapper.Map<PersonalDetailDTO, PersonalDetail>(dto);
-
-            return _UnitOfWork.PersonalDetail.Create(data, curriculumId); */
-            throw new System.NotImplementedException();
+            return _UnitOfWork.PersonalDetail.Create(dto);
         }
 
-        public int Update(PersonalDetailDTO dto, int curriculumId)
+        public int Update(PersonalDetailDTO dto)
         {
-            /* PersonalDetail data = Mapping.Mapper.Map<PersonalDetailDTO, PersonalDetail>(dto);
-
-            return _UnitOfWork.PersonalDetail.Update(data, curriculumId); */
-            throw new System.NotImplementedException();
+            return _UnitOfWork.PersonalDetail.Update(dto);
         }
 
         public PersonalDetailDTO GetByCurriculumId(int curriculumId)
         {
-            /* PersonalDetail data = _UnitOfWork.PersonalDetail.GetByCurriculumId(curriculumId);
+            PersonalDetailDTO dto = _UnitOfWork.PersonalDetail.GetByCurriculumId(curriculumId);
             
-            if (data != null)
-                return Mapping.Mapper.Map<PersonalDetail, PersonalDetailDTO>(data);
+            if (dto != null)
+                return dto;
 
-            return null; */
-            throw new System.NotImplementedException();
+            return null;
         }
     }
 }

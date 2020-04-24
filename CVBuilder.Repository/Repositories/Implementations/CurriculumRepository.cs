@@ -43,5 +43,11 @@ namespace CVBuilder.Repository.Repositories.Implementations
             Curriculum entity = _context.Curriculum.SingleOrDefault(c => c.CurriculumId == curriculumId);
             return Mapping.Mapper.Map<Curriculum,CurriculumDTO>(entity);
         }
+
+        public SectionVisibilityDTO GetIsVisibleStates(int curriculumId)
+        {
+            Curriculum entity = _context.Curriculum.SingleOrDefault(c => c.CurriculumId == curriculumId);
+            return Mapping.Mapper.Map<Curriculum,SectionVisibilityDTO>(entity);
+        }
     }
 }
