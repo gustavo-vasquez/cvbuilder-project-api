@@ -1,3 +1,5 @@
+CVBuilder.Core/bin/*
+CVBuilder.Core/obj/*
 CVBuilder.Domain/bin/*
 CVBuilder.Domain/obj/*
 CVBuilder.Repository/bin/*

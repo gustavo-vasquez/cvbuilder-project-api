@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CVBuilder.Domain\CVBuilder.Domain.csproj" />
+    <ProjectReference Include="..\CVBuilder.Core\CVBuilder.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

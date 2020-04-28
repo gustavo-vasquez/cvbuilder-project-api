@@ -12,12 +12,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using CVBuilder.Repository;
 using Microsoft.EntityFrameworkCore;
-using CVBuilder.Repository.Repositories.Interfaces;
-using CVBuilder.Repository.Repositories.Implementations;
-using CVBuilder.Service.Interfaces;
-using CVBuilder.Service.Implementations;
 using AutoMapper;
-using CVBuilder.Repository.DTOs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using CVBuilder.Service.Helpers;
+using CVBuilder.Core;
+using CVBuilder.Core.Services;
+using CVBuilder.Service.Services;
+using CVBuilder.Core.DTOs;
 
 namespace CVBuilder.WebAPI
 {
@@ -48,17 +50,44 @@ namespace CVBuilder.WebAPI
                     });
             });
 
-            services.AddScoped<IUnitOfWorkRepository,UnitOfWorkRepository>();
+            services.Configure<TokenManagement>(Configuration.GetSection("tokenManagement"));
+            var token = Configuration.GetSection("tokenManagement").Get<TokenManagement>();
+            var secret = System.Text.Encoding.ASCII.GetBytes(token.Secret);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(token.Secret)),
+                    ValidIssuer = token.Issuer,
+                    ValidAudience = token.Audience,
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+            //services.AddScoped<IAuthenticate, TokenAuthentication>();
+            //services.AddScoped<IUserManagement, UserManagement>();
+
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
+            services.AddTransient<IUserService,UserService>();
             services.AddTransient<ICurriculumService,CurriculumService>();
             services.AddTransient<IPersonalDetailService,PersonalDetailService>();
-            services.AddTransient<IService<StudyDTO>,StudyService>();
-            services.AddTransient<IService<WorkExperienceDTO>,WorkExperienceService>();
-            services.AddTransient<IService<CertificateDTO>,CertificateService>();
-            services.AddTransient<IService<LanguageDTO>,LanguageService>();
-            services.AddTransient<IService<SkillDTO>,SkillService>();
-            services.AddTransient<IService<InterestDTO>,InterestService>();
-            services.AddTransient<IService<PersonalReferenceDTO>,PersonalReferenceService>();
-            services.AddTransient<IService<CustomSectionDTO>,CustomSectionService>();
+            services.AddTransient<ISectionService<StudyDTO>,StudyService>();
+            services.AddTransient<ISectionService<WorkExperienceDTO>,WorkExperienceService>();
+            services.AddTransient<ISectionService<CertificateDTO>,CertificateService>();
+            services.AddTransient<ISectionService<LanguageDTO>,LanguageService>();
+            services.AddTransient<ISectionService<SkillDTO>,SkillService>();
+            services.AddTransient<ISectionService<InterestDTO>,InterestService>();
+            services.AddTransient<ISectionService<PersonalReferenceDTO>,PersonalReferenceService>();
+            services.AddTransient<ISectionService<CustomSectionDTO>,CustomSectionService>();
             services.AddTransient<ITemplateService,TemplateService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -77,6 +106,8 @@ namespace CVBuilder.WebAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

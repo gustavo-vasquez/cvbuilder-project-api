@@ -1,6 +1,6 @@
 using AutoMapper;
+using CVBuilder.Core.DTOs;
 using CVBuilder.Domain.Models;
-using CVBuilder.Repository.DTOs;
 
 namespace CVBuilder.Repository.Automapper
 {
@@ -8,6 +8,15 @@ namespace CVBuilder.Repository.Automapper
     {
         public MapperDTOProfile()
         {
+            CreateMap<UserDTO, User>();
+
+            CreateMap<User, UserDTO>(MemberList.Destination)
+                .ForMember(dest => dest.AccessDate, act => act.MapFrom(src => System.DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss")))
+                .ForMember(dest => dest.Photo, act => act.MapFrom(
+                    (src,dest,destMember,context) =>
+                        ByteArrayToBase64((byte[])context.Items["PhotoArray"],(string)context.Items["PhotoMimeType"])
+                ));
+
             CreateMap<PersonalDetailDTO, PersonalDetail>()
                 .ForMember(dest => dest.Photo, act => act.MapFrom(src => src.UploadedPhoto))
                 .ForMember(dest => dest.Curriculum, act => act.Ignore());
@@ -65,7 +74,7 @@ namespace CVBuilder.Repository.Automapper
             if (file != null && file.Length > 0)
                 return System.String.Concat("data:", photoMimeType, ";base64,", System.Convert.ToBase64String(file));
 
-            return null;
+            return "https://www.gravatar.com/avatar/bd353396ae638ea35966c683cc56e1f6?s=48&d=identicon&r=PG";
         }
     }
 }

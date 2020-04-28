@@ -9,18 +9,13 @@ namespace CVBuilder.WebAPI.Models
 {
     public class DateDropdownList
     {
-        public List<SelectListItem> Days { get; set; }
         public List<SelectListItem> Months { get; set; }
         public List<SelectListItem> Years { get; set; }
 
         public DateDropdownList(DateType type)
         {
-            Days = new List<SelectListItem>();
             Months = new List<SelectListItem>();
             int yearRangeStart, yearRangeCount;
-
-            yearRangeStart = DateTime.Now.Year - 64;
-            yearRangeCount = (DateTime.Now.Year - yearRangeStart) + 1;
 
             if (type != DateType.CERTIFICATE)
             {
@@ -44,6 +39,11 @@ namespace CVBuilder.WebAPI.Models
 
                 foreach (KeyValuePair<string, string> month in months)
                     Months.Add(new SelectListItem() { Value = month.Key, Text = month.Value });
+            }
+            else
+            {
+                yearRangeStart = DateTime.Now.Year - 64;
+                yearRangeCount = (DateTime.Now.Year - yearRangeStart) + 1;
             }
 
             // Generación del combo con los años

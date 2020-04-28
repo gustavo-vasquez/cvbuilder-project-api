@@ -1,6 +1,6 @@
 using System.IO;
 using AutoMapper;
-using CVBuilder.Repository.DTOs;
+using CVBuilder.Core.DTOs;
 using CVBuilder.Service.Helpers;
 using CVBuilder.WebAPI.Helpers.Enums;
 using CVBuilder.WebAPI.Models;
@@ -12,6 +12,8 @@ namespace CVBuilder.WebAPI.Automapper
     {
         public MapperAPIProfile()
         {
+            CreateMap<RegisterModel,UserDTO>();
+
             CreateMap<PersonalDetailModel, PersonalDetailDTO>()
                 .ForMember(dest => dest.UploadedPhoto, act => act.MapFrom(src => PostedFileToByteArray(src.UploadedPhoto)))
                 .ForMember(dest => dest.MimeType, act => act.MapFrom(src => src.UploadedPhoto != null ? src.UploadedPhoto.ContentType : null))
@@ -72,7 +74,7 @@ namespace CVBuilder.WebAPI.Automapper
                 .ForMember(dest => dest.Photo, act => act.MapFrom(src => src.Photo ?? GlobalVariables.DEFAULT_AVATAR_PATH))
                 .ForMember(dest => dest.LinePhone, act => act.MapFrom(src => src.LinePhone != null && src.AreaCodeLP != null ? "(+" + src.AreaCodeLP + ") " + src.LinePhone : null))
                 .ForMember(dest => dest.MobilePhone, act => act.MapFrom(src => src.MobilePhone != null && src.AreaCodeMP != null ? "(+" + src.AreaCodeMP + ") " + src.MobilePhone : null))
-                .ForMember(dest => dest.Location, act => act.MapFrom(src => GenerateLocation(src.Address, src.City, src.Country, src.PostalCode)));
+                .ForMember(dest => dest.Location, act => act.MapFrom(src => GenerateLocation(src.Address, src.City, src.PostalCode)));
 
             CreateMap<StudyDTO, StudiesDisplay>()
                 .ForMember(dest => dest.StateInTime, act => act.MapFrom(src => GenerateTimePeriodCV(src.StartMonth, src.StartYear, src.EndMonth, src.EndYear)));
@@ -111,7 +113,7 @@ namespace CVBuilder.WebAPI.Automapper
             return null;
         }
 
-        private string GenerateLocation(string address, string city, string country, int? postalCode)
+        private string GenerateLocation(string address, string city, int? postalCode)
         {
             string location = string.Empty;
 
@@ -127,11 +129,6 @@ namespace CVBuilder.WebAPI.Automapper
 
             if (city != null)
                 location += city;
-
-            if (country != null)
-                location += ", " + country;
-
-            
 
             if (location == string.Empty)
                 return null;
