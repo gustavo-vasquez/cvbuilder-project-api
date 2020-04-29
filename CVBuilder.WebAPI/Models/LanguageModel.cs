@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CVBuilder.Service.Helpers;
+using CVBuilder.WebAPI.Helpers;
 using CVBuilder.WebAPI.Helpers.Enums;
 using CVBuilder.WebAPI.Validators;
 using Microsoft.AspNetCore.Mvc.Rendering;

@@ -1,4 +1,4 @@
-namespace CVBuilder.WebAPI.Validators
+namespace CVBuilder.WebAPI.Helpers
 {
     internal static class ErrorMessages
     {
@@ -10,6 +10,8 @@ namespace CVBuilder.WebAPI.Validators
         public const string MAX_RANGE_4 = "Máximo 4 números";
         public const string MAX_RANGE_5 = "Máximo 5 números";
         public const string MAX_RANGE_10 = "Máximo 10 números";
+        public const string COMPARE_PASSWORD = "Las contraseñas no coinciden";
+        public const string TERMS_AND_CONDITIONS = "Debes aceptar para continuar";
 
         // Mensajes de las validaciones personalizadas
         public const string MONTH_PERIOD_REQUIRED = "Elija un mes";

@@ -20,6 +20,7 @@ using CVBuilder.Core;
 using CVBuilder.Core.Services;
 using CVBuilder.Service.Services;
 using CVBuilder.Core.DTOs;
+using System.Text;
 
 namespace CVBuilder.WebAPI
 {
@@ -60,16 +61,18 @@ namespace CVBuilder.WebAPI
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(x =>
             {
-                x.RequireHttpsMetadata = false;
+                x.RequireHttpsMetadata = true;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(token.Secret)),
+                    ClockSkew = TimeSpan.Zero,
                     ValidIssuer = token.Issuer,
                     ValidAudience = token.Audience,
-                    ValidateIssuer = false,
-                    ValidateAudience = false
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(token.Secret))
                 };
             });
 
@@ -105,9 +108,9 @@ namespace CVBuilder.WebAPI
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

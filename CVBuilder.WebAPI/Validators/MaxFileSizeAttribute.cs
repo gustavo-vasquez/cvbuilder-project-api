@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using CVBuilder.WebAPI.Helpers;
 using Microsoft.AspNetCore.Http;
 
 namespace CVBuilder.WebAPI.Validators

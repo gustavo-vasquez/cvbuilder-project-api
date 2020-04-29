@@ -1,4 +1,5 @@
 ﻿using CVBuilder.Service.Helpers;
+using CVBuilder.WebAPI.Helpers;
 using System;
 using System.ComponentModel.DataAnnotations;
 

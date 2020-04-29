@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using CVBuilder.WebAPI.Validators;
+using CVBuilder.WebAPI.Helpers;
 
 namespace CVBuilder.WebAPI.Models
 {

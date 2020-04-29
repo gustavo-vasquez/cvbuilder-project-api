@@ -1,6 +1,7 @@
+using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using CVBuilder.Core;
 using CVBuilder.Core.DTOs;
 using CVBuilder.Core.Services;
@@ -56,14 +57,14 @@ namespace CVBuilder.Service.Services
                 new Claim(UserClaims.ACCESSDATE, userInfo.AccessDate)
             };
 
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_tokenManagement.Secret));
+            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_tokenManagement.Secret));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                
+
             var jwtToken = new JwtSecurityToken(
                 _tokenManagement.Issuer,
                 _tokenManagement.Audience,
                 claim,
-                expires: System.DateTime.Now.AddMinutes(_tokenManagement.AccessExpiration),
+                expires: DateTime.Now.AddMinutes(_tokenManagement.AccessExpiration),
                 signingCredentials: credentials
             );
 
@@ -72,14 +73,15 @@ namespace CVBuilder.Service.Services
             return true;
         }
 
-        public bool ValidateToken(string token)
+        // Validar token manualmente
+        /* public bool ValidateToken(string token)
         {
             var securityKey = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(_tokenManagement.Secret));
             var tokenHandler = new JwtSecurityTokenHandler();
 
             try
 	        {
-                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                var claimsPrincipal = tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     ValidateIssuer = true,
@@ -93,15 +95,16 @@ namespace CVBuilder.Service.Services
 	        {
 		        return false;
             }
-            /* catch(SecurityTokenValidationException ex)
-            {
-                throw new System.Exception($"Error al validar el token: {ex.Message}");
-            } */
+            //catch(SecurityTokenValidationException ex)
+            //{
+            //    throw new System.Exception($"Error al validar el token: {ex.Message}");
+            //}
 	        
             return true;
-        }
+        } */
 
-        public string GetClaim(string token, string claimType)
+        // Obtener campos específicos del token via Claims
+        /* public string GetClaim(string token, string claimType)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 	        var securityToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
@@ -109,6 +112,6 @@ namespace CVBuilder.Service.Services
 	        var stringClaimValue = securityToken.Claims.First(claim => claim.Type == claimType).Value;
 	        
             return stringClaimValue;
-        }
+        } */
     }
 }

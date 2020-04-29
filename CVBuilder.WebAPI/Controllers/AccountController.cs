@@ -20,39 +20,47 @@ namespace CVBuilder.WebAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("register")]
+        [HttpPost("[action]")]
         public IActionResult Register([FromBody]RegisterModel model)
         {
-            if(!ModelState.IsValid)
-                return BadRequest("Datos no válidos. Vuelva a intentarlo.");
-
             _userService.Create(Mapping.Mapper.Map<RegisterModel,UserDTO>(model));
 
             UserDTO userInfo;
             
             if(_userService.IsAuthenticated(model.Email, model.Password, out userInfo))
-            {
                 return Ok(userInfo);
-            }
             else
                 return BadRequest("No se ha podido iniciar sesión automáticamente.");
         }
 
         [AllowAnonymous]
-        [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginModel model)
+        [HttpPost("[action]")]
+        public IActionResult Login([FromBody]LoginModel model)
         {
-            if(!ModelState.IsValid)
-                return BadRequest("Datos no válidos. Vuelva a intentarlo.");
-
             UserDTO userInfo;
             
             if(_userService.IsAuthenticated(model.Email, model.Password, out userInfo))
-            {
                 return Ok(userInfo);
-            }
             else
-                return BadRequest("Error al iniciar sesión.");
+                return BadRequest("Error al iniciar sesión. Vuelva a intentarlo.");
         }
+
+        [HttpGet("values")]
+        public IActionResult GetValues()
+        {
+            return Ok(new { nombre = "cosme", apellido = "fulanito" });
+        }
+
+        [AllowAnonymous]
+        [HttpGet("valuess")]
+        public IActionResult GetValuess()
+        {
+            return Ok(new { nombre = "cosme", apellido = "fulanito" });
+        }
+
+
+        # region - HELPERS -
+
+        # endregion
     }
 }
