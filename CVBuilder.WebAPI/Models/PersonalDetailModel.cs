@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace CVBuilder.WebAPI.Models
 {
-    public class PersonalDetailModel : SectionModelBase
+    public class PersonalDetailModel : SectionModel
     {
         public int PersonalDetailId { get; set; }
 

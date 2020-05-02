@@ -42,5 +42,6 @@ namespace CVBuilder.Repository
         public DbSet<Template> Templates { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<WorkExperience> WorkExperiences { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
     }
 }

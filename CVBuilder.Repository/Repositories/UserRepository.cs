@@ -12,15 +12,15 @@ namespace CVBuilder.Repository.Repositories
         {
         }
 
-        public int Create(UserDTO dto)
+        public int Create(RegisterDTO dto)
         {
-            User newUser = Mapping.Mapper.Map<UserDTO,User>(dto);
+            User newUser = Mapping.Mapper.Map<RegisterDTO,User>(dto);
             _context.Users.Add(newUser);
             _context.SaveChanges();
             return newUser.UserId;
         }
 
-        public bool CheckByEmailAndPassword(string email, string password, out UserDTO dto)
+        public bool IsValidUser(string email, string password, out UserDTO dto, out int userId, System.DateTime accessDate)
         {
             User user = _context.Users.Where(u => u.Email == email && u.Password == password).SingleOrDefault();
 
@@ -31,18 +31,26 @@ namespace CVBuilder.Repository.Repositories
                 
                 dto = Mapping.Mapper.Map<User,UserDTO>(user, opts =>
                 {
+                    opts.Items["AccessDate"] = accessDate;
                     opts.Items["PhotoArray"] = personalDetail.Photo;
                     opts.Items["PhotoMimeType"] = personalDetail.PhotoMimeType;
                 });
+                userId = user.UserId;
 
                 return true;
             }
             else
             {
                 dto = null;
+                userId = 0;
                 return false;
-            }
-                
+            }   
+        }
+
+        public int GetUserIdByEmail(string email)
+        {
+            User entity = _context.Users.SingleOrDefault(t => t.Email == email);
+            return entity != null ? entity.UserId : 0;
         }
     }
 }

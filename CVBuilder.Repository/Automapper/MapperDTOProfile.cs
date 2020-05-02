@@ -8,10 +8,12 @@ namespace CVBuilder.Repository.Automapper
     {
         public MapperDTOProfile()
         {
-            CreateMap<UserDTO, User>();
+            CreateMap<RegisterDTO, User>(MemberList.Source);
 
             CreateMap<User, UserDTO>(MemberList.Destination)
-                .ForMember(dest => dest.AccessDate, act => act.MapFrom(src => System.DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss")))
+                .ForMember(dest => dest.AccessDate, act => act.MapFrom(
+                    (src,dest,destMember,context) =>
+                        ((System.DateTime)context.Items["AccessDate"]).ToString("dddd, dd MMMM yyyy HH:mm:ss")))
                 .ForMember(dest => dest.Photo, act => act.MapFrom(
                     (src,dest,destMember,context) =>
                         ByteArrayToBase64((byte[])context.Items["PhotoArray"],(string)context.Items["PhotoMimeType"])

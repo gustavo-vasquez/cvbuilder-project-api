@@ -18,5 +18,6 @@ namespace CVBuilder.Core
         ISectionRepository<PersonalReferenceDTO,PersonalReference> PersonalReference { get; }
         ISectionRepository<CustomSectionDTO,CustomSection> CustomSection { get; }
         ITemplateRepository Template { get; }
+        IRefreshTokenRepository RefreshToken { get; }
     }
 }

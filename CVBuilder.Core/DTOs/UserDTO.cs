@@ -6,5 +6,6 @@ namespace CVBuilder.Core.DTOs
         public string Photo { get; set; }
         public string AccessDate { get; set; }
         public string Token { get; set; }
+        public string RefreshToken { get; set; }
     }
 }

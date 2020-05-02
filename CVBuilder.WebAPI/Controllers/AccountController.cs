@@ -1,9 +1,11 @@
+using System;
 using CVBuilder.Automapper;
 using CVBuilder.Core.DTOs;
 using CVBuilder.Core.Services;
 using CVBuilder.WebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CVBuilder.WebAPI.Controllers
 {
@@ -23,14 +25,16 @@ namespace CVBuilder.WebAPI.Controllers
         [HttpPost("[action]")]
         public IActionResult Register([FromBody]RegisterModel model)
         {
-            _userService.Create(Mapping.Mapper.Map<RegisterModel,UserDTO>(model));
-
-            UserDTO userInfo;
+            try
+            {
+                _userService.Create(Mapping.Mapper.Map<RegisterModel,RegisterDTO>(model));
+                return Login(new LoginModel() { Email = model.Email, Password = model.Password });
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, new { Message = ex.Message });
+            }
             
-            if(_userService.IsAuthenticated(model.Email, model.Password, out userInfo))
-                return Ok(userInfo);
-            else
-                return BadRequest("No se ha podido iniciar sesión automáticamente.");
         }
 
         [AllowAnonymous]
@@ -43,6 +47,21 @@ namespace CVBuilder.WebAPI.Controllers
                 return Ok(userInfo);
             else
                 return BadRequest("Error al iniciar sesión. Vuelva a intentarlo.");
+        }
+
+        [AllowAnonymous]
+        [HttpPost("[action]")]
+        public IActionResult ExchangeToken([FromBody]ExchangeTokenModel model)
+        {
+            try
+            {
+                ExchangeTokenDTO newTokens = _userService.ExchangeToken(model.Token, model.RefreshToken);
+                return Ok(newTokens);
+            }
+            catch(SecurityTokenException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("values")]

@@ -53,7 +53,7 @@ namespace CVBuilder.WebAPI
 
             services.Configure<TokenManagement>(Configuration.GetSection("tokenManagement"));
             var token = Configuration.GetSection("tokenManagement").Get<TokenManagement>();
-            var secret = System.Text.Encoding.ASCII.GetBytes(token.Secret);
+            var secret = System.Text.Encoding.UTF8.GetBytes(token.Secret);
 
             services.AddAuthentication(x =>
             {
@@ -72,7 +72,17 @@ namespace CVBuilder.WebAPI
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(token.Secret))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(token.Secret))
+                };
+                x.Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = context =>
+                    {
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                            context.Response.Headers.Add("Token-Expired", "true");
+                            
+                        return Task.CompletedTask;
+                    }
                 };
             });
 

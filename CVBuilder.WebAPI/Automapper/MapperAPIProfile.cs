@@ -12,7 +12,7 @@ namespace CVBuilder.WebAPI.Automapper
     {
         public MapperAPIProfile()
         {
-            CreateMap<RegisterModel,UserDTO>();
+            CreateMap<RegisterModel,RegisterDTO>();
 
             CreateMap<PersonalDetailModel, PersonalDetailDTO>()
                 .ForMember(dest => dest.UploadedPhoto, act => act.MapFrom(src => PostedFileToByteArray(src.UploadedPhoto)))

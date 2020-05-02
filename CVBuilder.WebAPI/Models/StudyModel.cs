@@ -5,7 +5,7 @@ using CVBuilder.WebAPI.Validators;
 
 namespace CVBuilder.WebAPI.Models
 {
-    public class StudyModel : SectionModelBase
+    public class StudyModel : SectionModel
     {
         public int StudyId { get; set; }
 

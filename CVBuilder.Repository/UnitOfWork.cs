@@ -21,6 +21,7 @@ namespace CVBuilder.Repository
         private ISectionRepository<PersonalReferenceDTO,PersonalReference> _PersonalReference;
         private ISectionRepository<CustomSectionDTO,CustomSection> _CustomSection;
         private Lazy<ITemplateRepository> _Template;
+        private IRefreshTokenRepository _RefreshToken;
 
         public UnitOfWork(CVBuilderDbContext context) : base(context)
         {
@@ -52,5 +53,6 @@ namespace CVBuilder.Repository
         public ISectionRepository<PersonalReferenceDTO,PersonalReference> PersonalReference => _PersonalReference = _PersonalReference ?? new SectionRepository<PersonalReferenceDTO,PersonalReference>(_context);
         public ISectionRepository<CustomSectionDTO,CustomSection> CustomSection => _CustomSection = _CustomSection ?? new SectionRepository<CustomSectionDTO,CustomSection>(_context);
         public ITemplateRepository Template => _Template.Value;
+        public IRefreshTokenRepository RefreshToken => _RefreshToken = _RefreshToken ?? new RefreshTokenRepository(_context);
     }
 }

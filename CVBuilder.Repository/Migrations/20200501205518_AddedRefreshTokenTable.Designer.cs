@@ -4,14 +4,16 @@ using CVBuilder.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CVBuilder.Repository.Migrations
 {
     [DbContext(typeof(CVBuilderDbContext))]
-    partial class CVBuilderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200501205518_AddedRefreshTokenTable")]
+    partial class AddedRefreshTokenTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -19,5 +19,6 @@ namespace CVBuilder.Domain.Models
         public string Password { get; set; }
 
         public Curriculum Curriculum { get; set; }
+        public ICollection<RefreshToken> RefreshTokens { get; set; }
     }
 }

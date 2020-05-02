@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CVBuilder.WebAPI.Models
 {
-    public class SkillModel : SectionModelBase
+    public class SkillModel : SectionModel
     {
         public readonly List<SelectListItem> Levels;
 

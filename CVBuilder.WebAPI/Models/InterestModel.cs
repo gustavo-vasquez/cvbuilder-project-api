@@ -4,7 +4,7 @@ using CVBuilder.WebAPI.Helpers.Enums;
 
 namespace CVBuilder.WebAPI.Models
 {
-    public class InterestModel : SectionModelBase
+    public class InterestModel : SectionModel
     {
         public int InterestId { get; set; }
 
