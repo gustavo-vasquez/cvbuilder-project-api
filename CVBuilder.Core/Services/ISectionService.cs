@@ -9,7 +9,7 @@ namespace CVBuilder.Core.Services
         void Update(T dto);
         int Delete(int id);
         T GetById(int id);
-        List<SummaryBlockDTO> GetAllBlocks(int curriculumId);
+        List<SummaryBlockDTO> GetSummaryBlocks(int curriculumId);
         SummaryBlockDTO GetSummaryBlock(int id);
     }
 }

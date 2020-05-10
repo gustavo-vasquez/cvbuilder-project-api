@@ -1,4 +1,4 @@
-namespace CVBuilder.WebAPI.Helpers.Enums
+namespace CVBuilder.Core.Helpers
 {
     public enum FormMode
     {

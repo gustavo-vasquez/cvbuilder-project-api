@@ -1,8 +1,8 @@
 using System.IO;
 using AutoMapper;
 using CVBuilder.Core.DTOs;
+using CVBuilder.Core.Helpers;
 using CVBuilder.Service.Helpers;
-using CVBuilder.WebAPI.Helpers.Enums;
 using CVBuilder.WebAPI.Models;
 using Microsoft.AspNetCore.Http;
 

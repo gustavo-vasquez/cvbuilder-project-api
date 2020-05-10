@@ -12,6 +12,7 @@ namespace CVBuilder.Service.Services
         
         public WorkExperienceService(IUnitOfWork unitOfWork)
         {
+            _UnitOfWork = unitOfWork;
         }
 
         public int Create(WorkExperienceDTO dto)
@@ -44,7 +45,7 @@ namespace CVBuilder.Service.Services
             return _UnitOfWork.WorkExperience.GetAllVisible(curriculumId);
         }
 
-        public List<SummaryBlockDTO> GetAllBlocks(int curriculumId)
+        public List<SummaryBlockDTO> GetSummaryBlocks(int curriculumId)
         {
             IEnumerable<WorkExperienceDTO> allWorkExperiences = _UnitOfWork.WorkExperience.GetAll(curriculumId);
             List<SummaryBlockDTO> workExperienceBlocks = new List<SummaryBlockDTO>();

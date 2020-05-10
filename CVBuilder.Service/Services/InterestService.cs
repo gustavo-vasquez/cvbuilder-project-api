@@ -44,7 +44,7 @@ namespace CVBuilder.Service.Services
             return _UnitOfWork.Interest.GetAllVisible(curriculumId);
         }
 
-        public List<SummaryBlockDTO> GetAllBlocks(int curriculumId)
+        public List<SummaryBlockDTO> GetSummaryBlocks(int curriculumId)
         {
             IEnumerable<InterestDTO> allInterests = _UnitOfWork.Interest.GetAll(curriculumId);
             List<SummaryBlockDTO> interestBlocks = new List<SummaryBlockDTO>();

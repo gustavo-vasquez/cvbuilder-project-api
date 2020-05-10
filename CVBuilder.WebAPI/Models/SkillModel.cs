@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using CVBuilder.Core.Helpers;
 using CVBuilder.Service.Helpers;
 using CVBuilder.WebAPI.Helpers;
 using CVBuilder.WebAPI.Helpers.Enums;

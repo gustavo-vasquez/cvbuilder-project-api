@@ -52,7 +52,9 @@ namespace CVBuilder.Service.Services
             
             IEnumerable<Claim> claims = new[]
             {
-                new Claim(JwtUserClaims.EMAIL_ADDRESS, userInfo.Email),
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
+                new Claim(ClaimTypes.Email, userInfo.Email),
+                new Claim(ClaimTypes.Name, userInfo.Email),
                 new Claim(JwtUserClaims.PHOTO, userInfo.Photo),
                 new Claim(JwtUserClaims.ACCESS_DATE, userInfo.AccessDate)
             };
@@ -66,7 +68,7 @@ namespace CVBuilder.Service.Services
         public ExchangeTokenDTO ExchangeToken(string token, string refreshToken)
         {
             ClaimsPrincipal claimsPrincipal = this.GetClaimsFromExpiredToken(token);
-            string email = claimsPrincipal.FindFirstValue(JwtUserClaims.EMAIL_ADDRESS);
+            string email = claimsPrincipal.FindFirstValue(ClaimTypes.Email);
             int userId = _UnitOfWork.User.GetUserIdByEmail(email);
             string savedRefreshToken = this.GetRefreshToken(userId, email);
             
@@ -75,9 +77,11 @@ namespace CVBuilder.Service.Services
 
             IEnumerable<Claim> claimsCopied = new []
             {
-                 new Claim(JwtUserClaims.EMAIL_ADDRESS, email),
-                 new Claim(JwtUserClaims.PHOTO, claimsPrincipal.FindFirstValue(JwtUserClaims.PHOTO)),
-                 new Claim(JwtUserClaims.ACCESS_DATE, claimsPrincipal.FindFirstValue(JwtUserClaims.ACCESS_DATE))
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
+                new Claim(ClaimTypes.Email, email),
+                new Claim(ClaimTypes.Name, email),
+                new Claim(JwtUserClaims.PHOTO, claimsPrincipal.FindFirstValue(JwtUserClaims.PHOTO)),
+                new Claim(JwtUserClaims.ACCESS_DATE, claimsPrincipal.FindFirstValue(JwtUserClaims.ACCESS_DATE))
             };
             string newToken = this.GenerateToken(userId, claimsCopied, DateTime.Now);
             string newRefreshToken = this.GenerateRefreshToken(userId, _tokenManagement.RefreshExpiration);

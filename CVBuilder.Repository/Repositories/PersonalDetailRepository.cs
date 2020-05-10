@@ -15,8 +15,13 @@ namespace CVBuilder.Repository.Repositories
         public int Create(PersonalDetailDTO data)
         {
             // validar después el tamaño de la foto de perfil en la capa de servicios
-            _context.PersonalDetails.Add(Mapping.Mapper.Map<PersonalDetailDTO,PersonalDetail>(data));
-            return _context.SaveChanges();
+            if(!_context.PersonalDetails.Any(d => d.Id_Curriculum == data.Id_Curriculum))
+            {
+                _context.PersonalDetails.Add(Mapping.Mapper.Map<PersonalDetailDTO,PersonalDetail>(data));
+                return _context.SaveChanges();
+            }
+            else
+                return 0;
         }
 
         public int Update(PersonalDetailDTO data)
@@ -28,8 +33,8 @@ namespace CVBuilder.Repository.Repositories
 
         public PersonalDetailDTO GetByCurriculumId(int curriculumId)
         {
-            PersonalDetail row = _context.PersonalDetails.Where(p => p.Id_Curriculum == curriculumId).FirstOrDefault();
-            return Mapping.Mapper.Map<PersonalDetail,PersonalDetailDTO>(row);
+            PersonalDetail entity = _context.PersonalDetails.Where(p => p.Id_Curriculum == curriculumId).FirstOrDefault();
+            return entity != null ? Mapping.Mapper.Map<PersonalDetail,PersonalDetailDTO>(entity) : null;
         }
     }
 }

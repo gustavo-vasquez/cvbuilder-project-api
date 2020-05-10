@@ -1,4 +1,4 @@
-using CVBuilder.WebAPI.Helpers.Enums;
+using CVBuilder.Core.Helpers;
 
 namespace CVBuilder.WebAPI.Models
 {

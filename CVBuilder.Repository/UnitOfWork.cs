@@ -14,7 +14,7 @@ namespace CVBuilder.Repository
         private IPersonalDetailRepository _PersonalDetail;
         private ISectionRepository<StudyDTO,Study> _Study;
         private ISectionRepository<WorkExperienceDTO,WorkExperience> _WorkExperience;
-        private ISectionRepository<CertificateDTO,Certificate> _Certificate;
+        private Lazy<ISectionRepository<CertificateDTO,Certificate>> _Certificate;
         private ISectionRepository<LanguageDTO,Language> _Language;
         private ISectionRepository<SkillDTO,Skill> _Skill;
         private ISectionRepository<InterestDTO,Interest> _Interest;
@@ -35,6 +35,11 @@ namespace CVBuilder.Repository
                 return new CurriculumRepository(_context);
             });
 
+            _Certificate = new Lazy<ISectionRepository<CertificateDTO,Certificate>>(() =>
+            {
+                return new SectionRepository<CertificateDTO,Certificate>(_context);
+            });
+
             _Template = new Lazy<ITemplateRepository>(() =>
             {
                 return new TemplateRepository(_context);
@@ -44,9 +49,9 @@ namespace CVBuilder.Repository
         public IUserRepository User => _User.Value;
         public ICurriculumRepository Curriculum => _Curriculum.Value;
         public IPersonalDetailRepository PersonalDetail { get { return _PersonalDetail = _PersonalDetail ?? new PersonalDetailRepository(_context); }}
-        public ISectionRepository<StudyDTO,Study> Study => _Study = _Study ?? new SectionRepository<StudyDTO, Study>(_context);
+        public ISectionRepository<StudyDTO,Study> Study => _Study = _Study ?? new SectionRepository<StudyDTO,Study>(_context);
         public ISectionRepository<WorkExperienceDTO,WorkExperience> WorkExperience => _WorkExperience = _WorkExperience ?? new SectionRepository<WorkExperienceDTO,WorkExperience>(_context);
-        public ISectionRepository<CertificateDTO,Certificate> Certificate => _Certificate = _Certificate ?? new SectionRepository<CertificateDTO,Certificate>(_context);
+        public ISectionRepository<CertificateDTO,Certificate> Certificate => _Certificate.Value;
         public ISectionRepository<LanguageDTO,Language> Language => _Language = _Language ?? new SectionRepository<LanguageDTO,Language>(_context);
         public ISectionRepository<SkillDTO,Skill> Skill => _Skill = _Skill ?? new SectionRepository<SkillDTO,Skill>(_context);
         public ISectionRepository<InterestDTO,Interest> Interest => _Interest = _Interest ?? new SectionRepository<InterestDTO,Interest>(_context);

@@ -45,7 +45,7 @@ namespace CVBuilder.Service.Services
             return _UnitOfWork.Language.GetAllVisible(curriculumId);
         }
 
-        public List<SummaryBlockDTO> GetAllBlocks(int curriculumId)
+        public List<SummaryBlockDTO> GetSummaryBlocks(int curriculumId)
         {
             IEnumerable<LanguageDTO> allLanguages = _UnitOfWork.Language.GetAll(curriculumId);
             List<SummaryBlockDTO> languageBlocks = new List<SummaryBlockDTO>();

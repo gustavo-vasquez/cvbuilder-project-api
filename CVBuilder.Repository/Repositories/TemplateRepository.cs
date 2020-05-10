@@ -34,10 +34,7 @@ namespace CVBuilder.Repository.Repositories
                                 where cv.Id_User == userId
                                 select tem).SingleOrDefault();
 
-            if (template != null)
-                return template.Path;
-            else
-                return "/img/templates/classic.png";
+            return template != null ? template.Path : "/img/templates/classic.png";
         }
 
         public void ChangeTemplate(string path, int curriculumId, int userId)

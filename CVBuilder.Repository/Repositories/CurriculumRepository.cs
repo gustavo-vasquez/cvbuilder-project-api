@@ -33,7 +33,7 @@ namespace CVBuilder.Repository.Repositories
             return entity.CurriculumId;
         }
 
-        public int GetByUserId(int userId)
+        public int GetIdByUserId(int userId)
         {
             return _context.Curriculum.SingleOrDefault(c => c.Id_User == userId).CurriculumId;
         }

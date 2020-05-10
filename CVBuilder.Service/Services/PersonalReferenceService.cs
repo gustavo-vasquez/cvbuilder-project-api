@@ -44,7 +44,7 @@ namespace CVBuilder.Service.Services
             return _UnitOfWork.PersonalReference.GetAllVisible(curriculumId);
         }
 
-        public List<SummaryBlockDTO> GetAllBlocks(int curriculumId)
+        public List<SummaryBlockDTO> GetSummaryBlocks(int curriculumId)
         {
             IEnumerable<PersonalReferenceDTO> allPersonalReferences = _UnitOfWork.PersonalReference.GetAll(curriculumId);
             List<SummaryBlockDTO> personalReferenceBlocks = new List<SummaryBlockDTO>();

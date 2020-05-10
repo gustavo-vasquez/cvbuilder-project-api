@@ -5,7 +5,7 @@ namespace CVBuilder.Core.Repositories
     public interface ICurriculumRepository
     {
         int Create(int userId);
-        int GetByUserId(int userId);
+        int GetIdByUserId(int userId);
         CurriculumDTO GetById(int curriculumId);
         SectionVisibilityDTO GetIsVisibleStates(int curriculumId);
     }
