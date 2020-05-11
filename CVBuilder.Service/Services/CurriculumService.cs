@@ -60,7 +60,6 @@ namespace CVBuilder.Service.Services
         {
             int userId = _UnitOfWork.User.GetUserIdByEmail(email);
             int curriculumId = _UnitOfWork.Curriculum.GetIdByUserId(userId);
-            //IEnumerable<Domain.Models.Study> asd = _UnitOfWork.Study.GetTs(curriculumId);
 
             if(curriculumId > 0)
             {
@@ -107,16 +106,6 @@ namespace CVBuilder.Service.Services
             return (SummaryBlockDTO)summaryBlock;
         }
 
-        /* public void AddOrUpdatePersonalDetail(PersonalDetailDTO dto, FormMode mode)
-        {
-            switch(mode)
-            {
-                case FormMode.ADD: _personalDetailService.Create(dto); break;
-                case FormMode.EDIT: _personalDetailService.Update(dto); break;
-                default: throw new ArgumentException("Ocurrió un problema al agregar/actualizar la sección.");
-            }
-        } */
-
         public void AddOrUpdateSectionBlock<T>(T dto, FormMode mode, SectionNames section)
         {
             var sectionService = this.GetCurrentSectionService(section);
@@ -136,49 +125,16 @@ namespace CVBuilder.Service.Services
             sectionService.GetType().GetMethod("Delete").Invoke(sectionService, parameters);
         }
 
-        private object GetCurrentSectionService(SectionNames section)
-        {
-            return GetType().GetField(this.GetPropertyName(section), BindingFlags.Instance | BindingFlags.NonPublic).GetValue(this);
-        }
-
         public void ToggleSectionVisibility(SectionNames section, string email)
         {
             var userId = _UnitOfWork.User.GetUserIdByEmail(email);
             var curriculumId = _UnitOfWork.Curriculum.GetIdByUserId(userId);
-            var curriculum = _UnitOfWork.Curriculum.GetById(curriculumId);
-
-            switch(section)
-            {
-                case SectionNames.Study:
-                    _UnitOfWork.Study.ToggleVisibility(nameof(curriculum.StudiesIsVisible), curriculumId);
-                    break;
-                case SectionNames.WorkExperience:
-                    _UnitOfWork.WorkExperience.ToggleVisibility(nameof(curriculum.WorkExperiencesIsVisible), curriculumId);
-                    break;
-                case SectionNames.Certificate:
-                    _UnitOfWork.Certificate.ToggleVisibility(nameof(curriculum.CertificatesIsVisible), curriculumId);
-                    break;
-                case SectionNames.Language:
-                    _UnitOfWork.Language.ToggleVisibility(nameof(curriculum.LanguagesIsVisible), curriculumId);
-                    break;
-                case SectionNames.Skill:
-                    _UnitOfWork.Skill.ToggleVisibility(nameof(curriculum.SkillsIsVisible), curriculumId);
-                    break;
-                case SectionNames.Interest:
-                    _UnitOfWork.Interest.ToggleVisibility(nameof(curriculum.InterestsIsVisible), curriculumId);
-                    break;
-                case SectionNames.PersonalReference:
-                    _UnitOfWork.PersonalReference.ToggleVisibility(nameof(curriculum.PersonalReferencesIsVisible), curriculumId);
-                    break;
-                case SectionNames.CustomSection:
-                    _UnitOfWork.CustomSection.ToggleVisibility(nameof(curriculum.CustomSectionsIsVisible), curriculumId);
-                    break;
-                default:
-                    throw new System.InvalidOperationException("No se pudo cambiar la visibilidad de la sección.");
-            }
+            var sectionService = this.GetCurrentSectionService(section);
+            object[] parameters = { curriculumId };
+            sectionService.GetType().GetMethod("ToggleVisibility").Invoke(sectionService, parameters);
         }
 
-        public FinishedDTO GetCurriculumContent(int userId, int curriculumId)
+        public FinishedDTO GetContentReady(int userId, int curriculumId)
         {
             return new FinishedDTO()
             {
@@ -196,6 +152,8 @@ namespace CVBuilder.Service.Services
             };
         }
 
+        #region - HELPER METHODS -
+
         private string GetPropertyName(SectionNames section)
         {
             switch(section)
@@ -212,5 +170,12 @@ namespace CVBuilder.Service.Services
                 default: throw new ArgumentException("La sección indicada no es válida.");
             }
         }
+
+        private object GetCurrentSectionService(SectionNames section)
+        {
+            return GetType().GetField(this.GetPropertyName(section), BindingFlags.Instance | BindingFlags.NonPublic).GetValue(this);
+        }
+
+        #endregion
     }
 }

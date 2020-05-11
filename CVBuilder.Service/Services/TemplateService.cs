@@ -23,9 +23,9 @@ namespace CVBuilder.Service.Services
             return _UnitOfWork.Template.GetPreviewPath(userId);
         }
 
-        public void ChangeTemplate(string path, int curriculumId, int userId)
+        public string ChangeTemplate(string path, int curriculumId)
         {
-            _UnitOfWork.Template.ChangeTemplate(path, curriculumId, userId);
+            return _UnitOfWork.Template.ChangeTemplate(path, curriculumId);
         }
     }
 }

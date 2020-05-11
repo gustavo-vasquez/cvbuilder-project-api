@@ -37,20 +37,20 @@ namespace CVBuilder.Repository.Repositories
             return template != null ? template.Path : "/img/templates/classic.png";
         }
 
-        public void ChangeTemplate(string path, int curriculumId, int userId)
+        public string ChangeTemplate(string path, int curriculumId)
         {
             Template template = _context.Templates.SingleOrDefault(t => t.Path == path);
 
             if (template != null)
             {
-                Curriculum curriculum = _context.Curriculum.SingleOrDefault(c => c.CurriculumId == curriculumId && c.Id_User == userId);
+                Curriculum curriculum = _context.Curriculum.Find(curriculumId);
+                curriculum.Id_Template = template.TemplateId;
+                _context.SaveChanges();
 
-                if(curriculum != null)
-                {
-                    curriculum.Id_Template = template.TemplateId;
-                    _context.SaveChanges();
-                }
+                return template.Name;
             }
+
+            return null;
         }
     }
 }

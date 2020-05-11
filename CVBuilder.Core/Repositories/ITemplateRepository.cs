@@ -6,6 +6,6 @@ namespace CVBuilder.Core.Repositories
     {
         TemplateDTO GetByUserId(int userId);
         string GetPreviewPath(int userId);
-        void ChangeTemplate(string path, int curriculumId, int userId);
+        string ChangeTemplate(string path, int curriculumId);
     }
 }

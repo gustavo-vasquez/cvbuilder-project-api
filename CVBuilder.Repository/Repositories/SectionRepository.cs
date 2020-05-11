@@ -59,31 +59,55 @@ namespace CVBuilder.Repository.Repositories
 
         public IEnumerable<D> GetAll(int curriculumId)
         {
-            IEnumerable<T> entityList = SectionQueryResult(curriculumId);
+            IEnumerable<T> entityList = this.AllSectionResult(curriculumId);
             var queryMapped = Mapping.Mapper.Map<IEnumerable<T>,List<D>>(entityList);
             return (IEnumerable<D>)queryMapped;
         }
 
-        private IEnumerable<T> SectionQueryResult(int curriculumId)
+        private IEnumerable<T> AllSectionResult(int curriculumId)
         {
             var TClassName = typeof(T).FullName;
 
             if(TClassName == typeof(Study).FullName)
                 return (IEnumerable<T>)_context.Studies.Where(x => x.Id_Curriculum == curriculumId);
             else if(TClassName == typeof(WorkExperience).FullName)
-                return (IEnumerable<T>)_context.WorkExperiences.Where(s => s.Id_Curriculum == curriculumId);
+                return (IEnumerable<T>)_context.WorkExperiences.Where(x => x.Id_Curriculum == curriculumId);
             else if(TClassName == typeof(Certificate).FullName)
-                return (IEnumerable<T>)_context.Certificates.Where(s => s.Id_Curriculum == curriculumId);
+                return (IEnumerable<T>)_context.Certificates.Where(x => x.Id_Curriculum == curriculumId);
             else if(TClassName == typeof(Language).FullName)
-                return (IEnumerable<T>)_context.Languages.Where(s => s.Id_Curriculum == curriculumId);
+                return (IEnumerable<T>)_context.Languages.Where(x => x.Id_Curriculum == curriculumId);
             else if(TClassName == typeof(Skill).FullName)
-                return (IEnumerable<T>)_context.Skills.Where(s => s.Id_Curriculum == curriculumId);
+                return (IEnumerable<T>)_context.Skills.Where(x => x.Id_Curriculum == curriculumId);
             else if(TClassName == typeof(Interest).FullName)
-                return (IEnumerable<T>)_context.Interests.Where(s => s.Id_Curriculum == curriculumId);
+                return (IEnumerable<T>)_context.Interests.Where(x => x.Id_Curriculum == curriculumId);
             else if(TClassName == typeof(PersonalReference).FullName)
-                return (IEnumerable<T>)_context.PersonalReferences.Where(s => s.Id_Curriculum == curriculumId);
+                return (IEnumerable<T>)_context.PersonalReferences.Where(x => x.Id_Curriculum == curriculumId);
             else if(TClassName == typeof(CustomSection).FullName)
-                return (IEnumerable<T>)_context.CustomSections.Where(s => s.Id_Curriculum == curriculumId);
+                return (IEnumerable<T>)_context.CustomSections.Where(x => x.Id_Curriculum == curriculumId);
+
+            throw new Exception("La sección indicada no existe.");
+        }
+
+        private IEnumerable<T> AllVisibleSectionResult(int curriculumId)
+        {
+            var TClassName = typeof(T).FullName;
+
+            if(TClassName == typeof(Study).FullName)
+                return (IEnumerable<T>)_context.Studies.Where(s => s.Id_Curriculum == curriculumId && s.IsVisible);
+            else if(TClassName == typeof(WorkExperience).FullName)
+                return (IEnumerable<T>)_context.WorkExperiences.Where(w => w.Id_Curriculum == curriculumId && w.IsVisible);
+            else if(TClassName == typeof(Certificate).FullName)
+                return (IEnumerable<T>)_context.Certificates.Where(c => c.Id_Curriculum == curriculumId && c.IsVisible);
+            else if(TClassName == typeof(Language).FullName)
+                return (IEnumerable<T>)_context.Languages.Where(l => l.Id_Curriculum == curriculumId && l.IsVisible);
+            else if(TClassName == typeof(Skill).FullName)
+                return (IEnumerable<T>)_context.Skills.Where(sk => sk.Id_Curriculum == curriculumId && sk.IsVisible);
+            else if(TClassName == typeof(Interest).FullName)
+                return (IEnumerable<T>)_context.Interests.Where(i => i.Id_Curriculum == curriculumId && i.IsVisible);
+            else if(TClassName == typeof(PersonalReference).FullName)
+                return (IEnumerable<T>)_context.PersonalReferences.Where(p => p.Id_Curriculum == curriculumId && p.IsVisible);
+            else if(TClassName == typeof(CustomSection).FullName)
+                return (IEnumerable<T>)_context.CustomSections.Where(cs => cs.Id_Curriculum == curriculumId && cs.IsVisible);
 
             throw new Exception("La sección indicada no existe.");
         }
@@ -91,11 +115,9 @@ namespace CVBuilder.Repository.Repositories
         public IEnumerable<D> GetAllVisible(int curriculumId)
         {
             //Expression<System.Func<T,bool>> predicate
-            IQueryable<T> entity = _context.Set<T>().Where(x =>
-                (int)x.GetType().GetProperty("Id_Curriculum").GetValue(x) == curriculumId
-                && (bool)x.GetType().GetProperty("IsVisible").GetValue(x));
-
-            return Mapping.Mapper.Map<IQueryable<T>,IEnumerable<D>>(entity);
+            IEnumerable<T> entityList = this.AllVisibleSectionResult(curriculumId);
+            var queryMapped = Mapping.Mapper.Map<IEnumerable<T>,List<D>>(entityList);
+            return (IEnumerable<D>)queryMapped;
         }
 
         public D GetLast()
