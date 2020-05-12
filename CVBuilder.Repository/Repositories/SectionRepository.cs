@@ -3,9 +3,6 @@ using System.Linq;
 using CVBuilder.Domain.Models;
 using CVBuilder.Repository.Automapper;
 using CVBuilder.Core.Repositories;
-using System;
-using CVBuilder.Core.DTOs;
-using System.Linq.Expressions;
 
 namespace CVBuilder.Repository.Repositories
 {
@@ -59,12 +56,13 @@ namespace CVBuilder.Repository.Repositories
 
         public IEnumerable<D> GetAll(int curriculumId)
         {
-            IEnumerable<T> entityList = this.AllSectionResult(curriculumId);
+            //IEnumerable<T> entityList = this.AllSectionResult(curriculumId);
+            IEnumerable<T> entityList = _context.Set<T>().AsEnumerable().Where(x => (int)x.GetType().GetProperty("Id_Curriculum").GetValue(x) == curriculumId);
             var queryMapped = Mapping.Mapper.Map<IEnumerable<T>,List<D>>(entityList);
             return (IEnumerable<D>)queryMapped;
         }
 
-        private IEnumerable<T> AllSectionResult(int curriculumId)
+        /* private IEnumerable<T> AllSectionResult(int curriculumId)
         {
             var TClassName = typeof(T).FullName;
 
@@ -110,19 +108,19 @@ namespace CVBuilder.Repository.Repositories
                 return (IEnumerable<T>)_context.CustomSections.Where(cs => cs.Id_Curriculum == curriculumId && cs.IsVisible);
 
             throw new Exception("La sección indicada no existe.");
-        }
+        } */
 
         public IEnumerable<D> GetAllVisible(int curriculumId)
         {
-            //Expression<System.Func<T,bool>> predicate
-            IEnumerable<T> entityList = this.AllVisibleSectionResult(curriculumId);
+            //IEnumerable<T> entityList = this.AllVisibleSectionResult(curriculumId);
+            IEnumerable<T> entityList = _context.Set<T>().AsEnumerable().Where(x => (int)x.GetType().GetProperty("Id_Curriculum").GetValue(x) == curriculumId && (bool)x.GetType().GetProperty("IsVisible").GetValue(x));
             var queryMapped = Mapping.Mapper.Map<IEnumerable<T>,List<D>>(entityList);
             return (IEnumerable<D>)queryMapped;
         }
 
         public D GetLast()
         {
-            T entity = _context.Set<T>().OrderByDescending(x => (int)x.GetType().GetProperty("StudyId").GetValue(x)).First();
+            T entity = _context.Set<T>().AsEnumerable().Last();
             return Mapping.Mapper.Map<T,D>(entity);
         }
 
@@ -131,7 +129,6 @@ namespace CVBuilder.Repository.Repositories
             Curriculum curriculum = _context.Curriculum.SingleOrDefault(c => c.CurriculumId == curriculumId);
             var propertyInfo = curriculum.GetType().GetProperty(sectionIsVisible);
             propertyInfo.SetValue(curriculum, !(bool)propertyInfo.GetValue(curriculum));
-            //curriculum.StudiesIsVisible = !curriculum.StudiesIsVisible;
             _context.SaveChanges();
         }
     }
