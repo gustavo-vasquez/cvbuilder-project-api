@@ -70,7 +70,7 @@ namespace CVBuilder.Service.Services
             ClaimsPrincipal claimsPrincipal = this.GetClaimsFromExpiredToken(token);
             string email = claimsPrincipal.FindFirstValue(ClaimTypes.Email);
             int userId = _UnitOfWork.User.GetUserIdByEmail(email);
-            string savedRefreshToken = this.GetRefreshToken(userId, email);
+            string savedRefreshToken = this.GetRefreshToken(userId, refreshToken);
             
             if (savedRefreshToken != refreshToken)
                 throw new SecurityTokenException("Token de renovación expirado/incorrecto. Vuelva a iniciar sesión.");
@@ -88,6 +88,37 @@ namespace CVBuilder.Service.Services
             _UnitOfWork.RefreshToken.Delete(refreshToken);
 
             return new ExchangeTokenDTO() { Token = newToken, RefreshToken = newRefreshToken };
+        }
+
+        public bool CurrentTokenIsValid(string token)
+        {
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ClockSkew = TimeSpan.Zero,
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidIssuer = _tokenManagement.Issuer,
+                ValidAudience = _tokenManagement.Audience,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenManagement.Secret)),
+                ValidateLifetime = true
+            };
+            
+            try
+            {
+                SecurityToken securityToken;
+                var allClaims = new JwtSecurityTokenHandler().ValidateToken(token, tokenValidationParameters, out securityToken);
+                var jwtSecurityToken = securityToken as JwtSecurityToken;
+
+                if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                    throw new SecurityTokenException("Token incorrecto.");
+
+                return true;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         private string GenerateToken(int userId, IEnumerable<Claim> claims, DateTime expiryDate)
@@ -142,9 +173,9 @@ namespace CVBuilder.Service.Services
             return allClaims;
         }
 
-        private string GetRefreshToken(int userId, string email)
+        private string GetRefreshToken(int userId, string refreshToken)
         {
-            return userId != 0 ? _UnitOfWork.RefreshToken.GetByUserId(userId) : null;
+            return userId != 0 ? _UnitOfWork.RefreshToken.GetByUserId(userId, refreshToken) : null;
         }
     }
 }

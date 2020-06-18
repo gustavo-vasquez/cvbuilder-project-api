@@ -114,6 +114,11 @@ namespace CVBuilder.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            // Make sure you call this before calling app.UseMvc()
+            app.UseCors(
+                options => options.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod()
+            );
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

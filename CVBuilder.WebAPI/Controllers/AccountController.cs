@@ -55,11 +55,29 @@ namespace CVBuilder.WebAPI.Controllers
         {
             try
             {
+                //if(model.Token == null || model.RefreshToken == null)
                 ExchangeTokenDTO newTokens = _userService.ExchangeToken(model.Token, model.RefreshToken);
                 return Ok(newTokens);
             }
-            catch(SecurityTokenException ex)
+            catch(Exception ex)
             {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("[action]")]
+        public IActionResult ValidToken(string token)
+        {
+            try
+            {
+                return Ok(_userService.CurrentTokenIsValid(token));
+            }
+            catch(Exception ex)
+            {
+                if(ex is SecurityTokenExpiredException)
+                    return Ok(false);
+
                 return BadRequest(ex.Message);
             }
         }

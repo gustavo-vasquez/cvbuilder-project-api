@@ -4,6 +4,6 @@ namespace CVBuilder.Core.Repositories
     {
         void Create(int userId, string token, int expiryDate);
         void Delete(string token);
-        string GetByUserId(int userId);
+        string GetByUserId(int userId, string refreshToken);
     }
 }

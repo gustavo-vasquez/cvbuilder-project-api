@@ -32,9 +32,9 @@ namespace CVBuilder.Repository.Repositories
             _context.SaveChanges();
         }
 
-        public string GetByUserId(int userId)
+        public string GetByUserId(int userId, string refreshToken)
         {
-            RefreshToken entity = _context.RefreshTokens.SingleOrDefault(t => t.Id_User == userId && t.ExpiryDate > DateTime.Now);
+            RefreshToken entity = _context.RefreshTokens.SingleOrDefault(t => t.Id_User == userId && t.Token == refreshToken && t.ExpiryDate > DateTime.Now);
             return entity != null ? entity.Token : null;
         }
     }
