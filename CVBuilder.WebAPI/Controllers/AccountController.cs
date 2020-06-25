@@ -55,7 +55,6 @@ namespace CVBuilder.WebAPI.Controllers
         {
             try
             {
-                //if(model.Token == null || model.RefreshToken == null)
                 ExchangeTokenDTO newTokens = _userService.ExchangeToken(model.Token, model.RefreshToken);
                 return Ok(newTokens);
             }

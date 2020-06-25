@@ -230,15 +230,15 @@ namespace CVBuilder.WebAPI.Controllers
         }
 
         [HttpPut("template")]
-        public IActionResult ChangeTemplate([FromBody]string path)
+        public IActionResult ChangeTemplate([FromBody]string templatePathUrl)
         {
             var userId = System.Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            string templateName = _templateService.ChangeTemplate(path, _curriculumService.GetByUserId(userId));
+            string templateName = _templateService.ChangeTemplate(templatePathUrl, _curriculumService.GetByUserId(userId));
 
             if(templateName != null)
-                return Ok("La plantilla " + templateName + " se ha aplicado.");
+                return Ok(new { Message = "La plantilla " + templateName + " se ha aplicado." });
             else
-                return BadRequest("No se ha podido cambiar la plantilla. Causa: pathUrl incorrecto.");
+                return BadRequest(new { Message = "No se ha podido cambiar la plantilla. Causa: ruta de plantilla incorrecta." });
         }
 
         [HttpPost("visibility/{name}")]

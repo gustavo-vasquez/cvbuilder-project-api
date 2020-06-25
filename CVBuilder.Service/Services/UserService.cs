@@ -67,6 +67,9 @@ namespace CVBuilder.Service.Services
 
         public ExchangeTokenDTO ExchangeToken(string token, string refreshToken)
         {
+            if(refreshToken == null || token == null)
+                throw new SecurityTokenException("Ocurrió un error con el token. Vuelva a iniciar sesión.");
+
             ClaimsPrincipal claimsPrincipal = this.GetClaimsFromExpiredToken(token);
             string email = claimsPrincipal.FindFirstValue(ClaimTypes.Email);
             int userId = _UnitOfWork.User.GetUserIdByEmail(email);
