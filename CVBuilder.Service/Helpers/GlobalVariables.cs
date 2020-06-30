@@ -12,7 +12,7 @@ namespace CVBuilder.Service.Helpers
         public const string CERTIFICATE_CLASS_TEXT = "Presencial";
         public const string CERTIFICATE_INPROGRESS_TEXT = "En progreso";
 
-        public static string GenerateStateInTimeFormat(string startMonth, int? startYear, string endMonth, int? endYear)
+        public static string GenerateTimePeriodFormat(string startMonth, int? startYear, string endMonth, int? endYear)
         {
             string stateInTime = string.Empty;
 

@@ -56,7 +56,7 @@ namespace CVBuilder.Service.Services
                 {
                     SummaryId = study.StudyId,
                     Title = study.Title,
-                    StateInTime = GlobalVariables.GenerateStateInTimeFormat(study.StartMonth, study.StartYear, study.EndMonth, study.EndYear),
+                    TimePeriod = GlobalVariables.GenerateTimePeriodFormat(study.StartMonth, study.StartYear, study.EndMonth, study.EndYear),
                     IsVisible = study.IsVisible
                 });
             }
@@ -77,7 +77,7 @@ namespace CVBuilder.Service.Services
             {
                 SummaryId = study.StudyId,
                 Title = study.Title,
-                StateInTime = GlobalVariables.GenerateStateInTimeFormat(study.StartMonth, study.StartYear, study.EndMonth, study.EndYear),
+                TimePeriod = GlobalVariables.GenerateTimePeriodFormat(study.StartMonth, study.StartYear, study.EndMonth, study.EndYear),
                 IsVisible = study.IsVisible
             };
         }

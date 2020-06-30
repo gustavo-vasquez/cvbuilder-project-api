@@ -56,7 +56,7 @@ namespace CVBuilder.Service.Services
                 {
                     SummaryId = language.LanguageId,
                     Title = language.Name,
-                    StateInTime = "(" + LevelOptions.LevelComboBox[language.Level] + ")",
+                    TimePeriod = "(" + LevelOptions.LevelComboBox[language.Level] + ")",
                     IsVisible = language.IsVisible
                 });
             }
@@ -77,7 +77,7 @@ namespace CVBuilder.Service.Services
             {
                 SummaryId = language.LanguageId,
                 Title = language.Name,
-                StateInTime = "(" + LevelOptions.LevelComboBox[language.Level] + ")",
+                TimePeriod = "(" + LevelOptions.LevelComboBox[language.Level] + ")",
                 IsVisible = language.IsVisible
             };
         }

@@ -138,7 +138,7 @@ namespace CVBuilder.WebAPI.Automapper
 
         public string GenerateTimePeriodCV(string startMonth, int? startYear, string endMonth, int? endYear)
         {
-            string timePeriod = GlobalVariables.GenerateStateInTimeFormat(startMonth, startYear, endMonth, endYear);
+            string timePeriod = GlobalVariables.GenerateTimePeriodFormat(startMonth, startYear, endMonth, endYear);
 
             return timePeriod.Substring(1, timePeriod.Length - 2);
         }

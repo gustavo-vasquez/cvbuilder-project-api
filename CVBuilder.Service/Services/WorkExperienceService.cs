@@ -56,7 +56,7 @@ namespace CVBuilder.Service.Services
                 {
                     SummaryId = workExperience.WorkExperienceId,
                     Title = workExperience.Job + " en " + workExperience.Company,
-                    StateInTime = GlobalVariables.GenerateStateInTimeFormat(workExperience.StartMonth, workExperience.StartYear, workExperience.EndMonth, workExperience.EndYear),
+                    TimePeriod = GlobalVariables.GenerateTimePeriodFormat(workExperience.StartMonth, workExperience.StartYear, workExperience.EndMonth, workExperience.EndYear),
                     IsVisible = workExperience.IsVisible
                 });
             }
@@ -77,7 +77,7 @@ namespace CVBuilder.Service.Services
             {
                 SummaryId = workExperience.WorkExperienceId,
                 Title = workExperience.Job + " en " + workExperience.Company,
-                StateInTime = GlobalVariables.GenerateStateInTimeFormat(workExperience.StartMonth, workExperience.StartYear, workExperience.EndMonth, workExperience.EndYear),
+                TimePeriod = GlobalVariables.GenerateTimePeriodFormat(workExperience.StartMonth, workExperience.StartYear, workExperience.EndMonth, workExperience.EndYear),
                 IsVisible = workExperience.IsVisible
             };
         }

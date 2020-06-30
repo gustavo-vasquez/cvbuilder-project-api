@@ -56,7 +56,7 @@ namespace CVBuilder.Service.Services
                 {
                     SummaryId = certificate.CertificateId,
                     Title = certificate.Name,
-                    StateInTime = certificate.InProgress ? "(" + GlobalVariables.CERTIFICATE_INPROGRESS_TEXT + ")" : "(" + certificate.Year.ToString() + ")",
+                    TimePeriod = certificate.InProgress ? "(" + GlobalVariables.CERTIFICATE_INPROGRESS_TEXT + ")" : "(" + certificate.Year.ToString() + ")",
                     IsVisible = certificate.IsVisible
                 });
             }
@@ -77,7 +77,7 @@ namespace CVBuilder.Service.Services
             {
                 SummaryId = certificate.CertificateId,
                 Title = certificate.Name,
-                StateInTime = (certificate.InProgress) ? "(" + GlobalVariables.CERTIFICATE_INPROGRESS_TEXT + ")" : "(" + certificate.Year.ToString() + ")",
+                TimePeriod = (certificate.InProgress) ? "(" + GlobalVariables.CERTIFICATE_INPROGRESS_TEXT + ")" : "(" + certificate.Year.ToString() + ")",
                 IsVisible = certificate.IsVisible
             };
         }

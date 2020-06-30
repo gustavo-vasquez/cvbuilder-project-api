@@ -56,7 +56,7 @@ namespace CVBuilder.Service.Services
                 {
                     SummaryId = skill.SkillId,
                     Title = skill.Name,
-                    StateInTime = "(" + LevelOptions.LevelComboBox[skill.Level] + ")",
+                    TimePeriod = "(" + LevelOptions.LevelComboBox[skill.Level] + ")",
                     IsVisible = skill.IsVisible
                 });
             }
@@ -77,7 +77,7 @@ namespace CVBuilder.Service.Services
             {
                 SummaryId = skill.SkillId,
                 Title = skill.Name,
-                StateInTime = "(" + LevelOptions.LevelComboBox[skill.Level] + ")",
+                TimePeriod = "(" + LevelOptions.LevelComboBox[skill.Level] + ")",
                 IsVisible = skill.IsVisible
             };
         }
