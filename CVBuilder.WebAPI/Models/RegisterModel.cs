@@ -9,6 +9,7 @@ namespace CVBuilder.WebAPI.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.REQUIRED)]
+        [MinLength(6, ErrorMessage = ErrorMessages.MIN_LENGTH_6)]
         [MaxLength(100, ErrorMessage = ErrorMessages.MAX_LENGTH_100)]
         public string Password { get; set; }
 

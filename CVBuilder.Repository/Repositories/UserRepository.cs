@@ -14,10 +14,14 @@ namespace CVBuilder.Repository.Repositories
 
         public int Create(RegisterDTO dto)
         {
-            User newUser = Mapping.Mapper.Map<RegisterDTO,User>(dto);
-            _context.Users.Add(newUser);
-            _context.SaveChanges();
-            return newUser.UserId;
+            if(!_context.Users.Any(u => u.Email == dto.Email)) {
+                User newUser = Mapping.Mapper.Map<RegisterDTO,User>(dto);
+                _context.Users.Add(newUser);
+                _context.SaveChanges();
+                return newUser.UserId;
+            }
+            else
+                throw new System.ArgumentException("Ya existe un usuario registrado con el correo " + dto.Email + ".");
         }
 
         public bool IsValidUser(string email, string password, out UserDTO dto, out int userId, System.DateTime accessDate)

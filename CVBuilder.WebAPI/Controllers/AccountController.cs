@@ -32,6 +32,9 @@ namespace CVBuilder.WebAPI.Controllers
             }
             catch(Exception ex)
             {
+                if(ex is ArgumentException)
+                    return BadRequest(new { Message = ex.Message });
+                    
                 return StatusCode(500, new { Message = ex.Message });
             }
             
@@ -46,7 +49,7 @@ namespace CVBuilder.WebAPI.Controllers
             if(_userService.IsAuthenticated(model.Email, model.Password, out userInfo))
                 return Ok(userInfo);
             else
-                return BadRequest("Error al iniciar sesión. Vuelva a intentarlo.");
+                return BadRequest(new { Message = "Email y/o contraseña incorrecta."});
         }
 
         [AllowAnonymous]
