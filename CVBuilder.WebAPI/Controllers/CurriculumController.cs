@@ -43,7 +43,7 @@ namespace CVBuilder.WebAPI.Controllers
         public IActionResult DeleteSectionBlock(SectionNames name, int id)
         {
             _curriculumService.DeleteSectionBlock(name, id);
-            return Ok("Bloque de sección eliminado.");
+            return Ok(new { message = "Bloque de sección eliminado." });
         }
 
         /* [HttpPost("section/{name}")]

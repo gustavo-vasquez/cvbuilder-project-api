@@ -75,7 +75,8 @@ namespace CVBuilder.Service.Services
                     Interests = _interestService.GetSummaryBlocks(curriculumId),
                     CustomSections = _customSectionService.GetSummaryBlocks(curriculumId),
                     TemplatePath = _UnitOfWork.Template.GetPreviewPath(userId),
-                    SectionVisibilities = _UnitOfWork.Curriculum.GetIsVisibleStates(curriculumId)
+                    SectionVisibilities = _UnitOfWork.Curriculum.GetIsVisibleStates(curriculumId),
+                    CurriculumId = curriculumId
                 };
             }
             else

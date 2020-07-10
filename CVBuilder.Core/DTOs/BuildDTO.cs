@@ -15,5 +15,6 @@ namespace CVBuilder.Core.DTOs
         public IEnumerable<SummaryBlockDTO> CustomSections { get; set; }
         public string TemplatePath { get; set; }
         public SectionVisibilityDTO SectionVisibilities { get; set; }
+        public int CurriculumId { get; set; }
     }
 }
