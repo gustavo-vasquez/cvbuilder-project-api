@@ -76,6 +76,20 @@ namespace CVBuilder.WebAPI.Controllers
             return Ok("Cambios guardados.");
         }
 
+        [HttpGet("study/{section}/{id}")]
+        public IActionResult GetStudy(SectionNames section, int id)
+        {
+            try
+            {
+                dynamic sectionFormData = _curriculumService.GetSectionFormData(section, id);
+                return Ok(sectionFormData);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [HttpPost("study")]
         public IActionResult NewStudy([FromBody]StudyModel model)
         {

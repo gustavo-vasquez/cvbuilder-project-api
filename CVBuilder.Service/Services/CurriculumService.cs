@@ -99,6 +99,22 @@ namespace CVBuilder.Service.Services
             }
         }
 
+        public dynamic GetSectionFormData(SectionNames section, int id)
+        {
+            switch(section)
+            {
+                case SectionNames.Study: return this._studyService.GetById(id);
+                case SectionNames.Certificate: return this._certificateService.GetById(id);
+                case SectionNames.WorkExperience: return this._workExperience.GetById(id);
+                case SectionNames.Language: return this._languageService.GetById(id);
+                case SectionNames.Skill: return this._skillService.GetById(id);
+                case SectionNames.Interest: return this._interestService.GetById(id);
+                case SectionNames.PersonalReference: return this._personalReferenceService.GetById(id);
+                case SectionNames.CustomSection: return this._customSectionService.GetById(id);
+                default: throw new ArgumentException("La sección proporcionada no existe.");
+            }
+        }
+
         public SummaryBlockDTO GetSectionBlock(SectionNames section, int id)
         {
             var sectionService = this.GetCurrentSectionService(section);

@@ -21,13 +21,10 @@ namespace CVBuilder.Repository.Repositories
 
         public void Update(D data, string keyProperty)
         {
-            T entity = this.GetByIdPrivate((int)data.GetType().GetProperty(keyProperty).GetValue(data));
-
-            if(entity != null)
-            {
-                entity = Mapping.Mapper.Map<D,T>(data);
-                _context.SaveChanges();
-            }
+            //T entity = this.GetByIdPrivate((int)data.GetType().GetProperty(keyProperty).GetValue(data));
+            T dataToUpdate = Mapping.Mapper.Map<D,T>(data);
+            _context.Set<T>().Update(dataToUpdate);
+            _context.SaveChanges();
         }
 
         public int Delete(int id)
