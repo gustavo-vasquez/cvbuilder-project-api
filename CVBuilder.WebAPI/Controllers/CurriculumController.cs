@@ -46,18 +46,6 @@ namespace CVBuilder.WebAPI.Controllers
             return Ok(new { message = "Bloque de sección eliminado." });
         }
 
-        /* [HttpPost("section/{name}")]
-        public IActionResult NewSectionBlock([FromBody]JsonElement model, SectionNames name)
-        {
-            var studyJson = System.Text.Json.JsonSerializer.Serialize(model);
-            var study = System.Text.Json.JsonSerializer.Deserialize<StudyModel>(studyJson);
-            //var studymodel = model.;
-            //StudyDTO dto = Mapping.Mapper.Map<SectionModel,StudyDTO>(studymodel);
-            //_curriculumService.AddOrUpdateSectionBlock<StudyDTO>(dto, studymodel.FormMode, name);
-            //return Ok(new { formid = "#" + model.FormId, id = model.StudyId, mode = Convert.ToInt32(model.FormMode) });
-            return Ok("Nuevo bloque de sección añadido.");
-        } */
-
         [HttpPost("personalDetail")]
         public IActionResult NewPersonalDetail([FromBody]PersonalDetailModel model)
         {
@@ -73,7 +61,7 @@ namespace CVBuilder.WebAPI.Controllers
             PersonalDetailDTO dto = Mapping.Mapper.Map<PersonalDetailModel,PersonalDetailDTO>(model);
             _curriculumService.AddOrUpdateSectionBlock<PersonalDetailDTO>(dto, model.FormMode, SectionNames.PersonalDetail);
 
-            return Ok("Cambios guardados.");
+            return Ok(new { message = "Detalles personales actualizados."});
         }
 
         [HttpGet("study/{section}/{id}")]

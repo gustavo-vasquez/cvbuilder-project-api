@@ -35,6 +35,6 @@ namespace CVBuilder.WebAPI.Models
             this.IsVisible = true;
         }
         
-        public readonly DateDropdownList Period = new DateDropdownList(DateType.CERTIFICATE);
+        //public readonly DateDropdownList Period = new DateDropdownList(DateType.CERTIFICATE);
     }
 }

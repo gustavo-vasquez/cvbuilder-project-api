@@ -104,8 +104,8 @@ namespace CVBuilder.Service.Services
             switch(section)
             {
                 case SectionNames.Study: return this._studyService.GetById(id);
-                case SectionNames.Certificate: return this._certificateService.GetById(id);
                 case SectionNames.WorkExperience: return this._workExperience.GetById(id);
+                case SectionNames.Certificate: return this._certificateService.GetById(id);
                 case SectionNames.Language: return this._languageService.GetById(id);
                 case SectionNames.Skill: return this._skillService.GetById(id);
                 case SectionNames.Interest: return this._interestService.GetById(id);

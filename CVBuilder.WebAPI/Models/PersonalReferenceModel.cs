@@ -21,7 +21,7 @@ namespace CVBuilder.WebAPI.Models
         public short? AreaCode { get; set; }
 
         [DataType(DataType.PhoneNumber)]
-        [Range(1, 9999999999, ErrorMessage = ErrorMessages.MAX_RANGE_10)]
+        [Range(1, 99999999, ErrorMessage = ErrorMessages.MAX_RANGE_8)]
         public int? Telephone { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.REQUIRED)]

@@ -29,7 +29,7 @@ namespace CVBuilder.WebAPI.Models
             base.FormId = FormIds.Language;
             base.FormMode = FormMode.ADD;
             this.IsVisible = true;
-            Levels = LevelsBox();
+            //Levels = LevelsBox();
         }
 
         private List<SelectListItem> LevelsBox()

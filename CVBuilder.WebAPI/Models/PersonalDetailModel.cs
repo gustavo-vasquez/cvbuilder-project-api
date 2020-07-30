@@ -46,21 +46,15 @@ namespace CVBuilder.WebAPI.Models
         public short? AreaCodeLP { get; set; }
 
         [DataType(DataType.PhoneNumber)]
-        [Range(1, 9999999999, ErrorMessage = ErrorMessages.MAX_RANGE_10)]
+        [Range(1, 99999999, ErrorMessage = ErrorMessages.MAX_RANGE_8)]
         public int? LinePhone { get; set; }
 
         [Range(1, 9999, ErrorMessage = ErrorMessages.MAX_RANGE_4)]
         public short? AreaCodeMP { get; set; }
 
         [DataType(DataType.PhoneNumber)]
-        [Range(1, 9999999999, ErrorMessage = ErrorMessages.MAX_RANGE_10)]
+        [Range(1, 99999999, ErrorMessage = ErrorMessages.MAX_RANGE_8)]
         public int? MobilePhone { get; set; }
-        public int? Day { get; set; }
-        public string Month { get; set; }
-        public int? Year { get; set; }
-
-        [MaxLength(100, ErrorMessage = ErrorMessages.MAX_LENGTH_100)]
-        public string Country { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.REQUIRED)]
         [MaxLength(300, ErrorMessage = ErrorMessages.MAX_LENGTH_300)]

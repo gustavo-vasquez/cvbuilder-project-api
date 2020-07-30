@@ -21,7 +21,7 @@ namespace CVBuilder.WebAPI.Validators
             ErrorMessage = ErrorMessageString;
             string currentValue = (string)value;
 
-            if (currentValue == LevelOptions.None || !AllowEmptyStrings)
+            if (currentValue == LevelOptions.None || AllowEmptyStrings)
                 return new ValidationResult(ErrorMessage);
 
             return ValidationResult.Success;

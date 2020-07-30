@@ -9,7 +9,7 @@ namespace CVBuilder.WebAPI.Helpers
         public const string MAX_LENGTH_300 = "Máximo 300 caracteres";
         public const string MAX_RANGE_4 = "Máximo 4 números";
         public const string MAX_RANGE_5 = "Máximo 5 números";
-        public const string MAX_RANGE_10 = "Máximo 10 números";
+        public const string MAX_RANGE_8 = "Máximo 8 números";
         public const string MIN_LENGTH_6 = "Mínimo 6 caracteres";
         public const string COMPARE_PASSWORD = "Las contraseñas no coinciden";
         public const string TERMS_AND_CONDITIONS = "Debes aceptar para continuar";
