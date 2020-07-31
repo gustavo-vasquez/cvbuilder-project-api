@@ -48,7 +48,7 @@ namespace CVBuilder.WebAPI.Models
             this.IsVisible = true;
         }
 
-        public readonly DateDropdownList StartPeriod = new DateDropdownList(DateType.START_PERIOD);
-        public readonly DateDropdownList EndPeriod = new DateDropdownList(DateType.END_PERIOD);
+        //public readonly DateDropdownList StartPeriod = new DateDropdownList(DateType.START_PERIOD);
+        //public readonly DateDropdownList EndPeriod = new DateDropdownList(DateType.END_PERIOD);
     }
 }

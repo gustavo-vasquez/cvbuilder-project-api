@@ -78,148 +78,84 @@ namespace CVBuilder.WebAPI.Controllers
             }
         }
 
-        [HttpPost("study")]
-        public IActionResult NewStudy([FromBody]StudyModel model)
+        [AcceptVerbs("POST","PUT")]
+        [Route("study")]
+        public IActionResult Study([FromBody]StudyModel model)
         {
             StudyDTO dto = Mapping.Mapper.Map<StudyModel,StudyDTO>(model);
             _curriculumService.AddOrUpdateSectionBlock<StudyDTO>(dto, model.FormMode, SectionNames.Study);
 
-            return Ok(new { formid = "#" + model.FormId, id = model.StudyId, mode = Convert.ToInt32(model.FormMode) });
+            return Ok(new { id = model.StudyId });
         }
 
-        [HttpPut("study")]
-        public IActionResult UpdateStudy([FromBody]StudyModel model)
-        {
-            StudyDTO dto = Mapping.Mapper.Map<StudyModel,StudyDTO>(model);
-            _curriculumService.AddOrUpdateSectionBlock<StudyDTO>(dto, model.FormMode, SectionNames.Study);
-
-            return Ok(new { formid = "#" + model.FormId, id = model.StudyId, mode = Convert.ToInt32(model.FormMode) });
-        }
-
-        [HttpPost("workExperience")]
-        public IActionResult NewWorkExperience([FromBody]WorkExperienceModel model)
+        [AcceptVerbs("POST","PUT")]
+        [Route("workExperience")]
+        public IActionResult WorkExperience([FromBody]WorkExperienceModel model)
         {
             WorkExperienceDTO dto = Mapping.Mapper.Map<WorkExperienceModel,WorkExperienceDTO>(model);
             _curriculumService.AddOrUpdateSectionBlock<WorkExperienceDTO>(dto, model.FormMode, SectionNames.WorkExperience);
 
-            return Ok(new { formid = "#" + model.FormId, id = model.WorkExperienceId, mode = Convert.ToInt32(model.FormMode) });
+            return Ok(new { id = model.WorkExperienceId });
         }
 
-        [HttpPut("workExperience")]
-        public IActionResult UpdateWorkExperience([FromBody]WorkExperienceModel model)
-        {
-            WorkExperienceDTO dto = Mapping.Mapper.Map<WorkExperienceModel,WorkExperienceDTO>(model);
-            _curriculumService.AddOrUpdateSectionBlock<WorkExperienceDTO>(dto, model.FormMode, SectionNames.WorkExperience);
-
-            return Ok(new { formid = "#" + model.FormId, id = model.WorkExperienceId, mode = Convert.ToInt32(model.FormMode) });
-        }
-
-        [HttpPost("certificate")]
-        public IActionResult NewCertificate([FromBody]CertificateModel model)
+        [AcceptVerbs("POST","PUT")]
+        [Route("certificate")]
+        public IActionResult Certificate([FromBody]CertificateModel model)
         {
             CertificateDTO dto = Mapping.Mapper.Map<CertificateModel,CertificateDTO>(model);
             _curriculumService.AddOrUpdateSectionBlock<CertificateDTO>(dto, model.FormMode, SectionNames.Certificate);
 
-            return Ok(new { formid = "#" + model.FormId, id = model.CertificateId, mode = Convert.ToInt32(model.FormMode) });
+            return Ok(new { id = model.CertificateId });
         }
 
-        [HttpPut("certificate")]
-        public IActionResult UpdateCertificate([FromBody]CertificateModel model)
-        {
-            CertificateDTO dto = Mapping.Mapper.Map<CertificateModel,CertificateDTO>(model);
-            _curriculumService.AddOrUpdateSectionBlock<CertificateDTO>(dto, model.FormMode, SectionNames.Certificate);
-
-            return Ok(new { formid = "#" + model.FormId, id = model.CertificateId, mode = Convert.ToInt32(model.FormMode) });
-        }
-
-        [HttpPost("language")]
-        public IActionResult NewLanguage([FromBody]LanguageModel model)
+        [AcceptVerbs("POST","PUT")]
+        [Route("language")]
+        public IActionResult Language([FromBody]LanguageModel model)
         {
             LanguageDTO dto = Mapping.Mapper.Map<LanguageModel,LanguageDTO>(model);
             _curriculumService.AddOrUpdateSectionBlock<LanguageDTO>(dto, model.FormMode, SectionNames.Language);
 
-            return Ok(new { formid = "#" + model.FormId, id = model.LanguageId, mode = Convert.ToInt32(model.FormMode) });
+            return Ok(new { id = model.LanguageId });
         }
 
-        [HttpPut("language")]
-        public IActionResult UpdateLanguage([FromBody]LanguageModel model)
-        {
-            LanguageDTO dto = Mapping.Mapper.Map<LanguageModel,LanguageDTO>(model);
-            _curriculumService.AddOrUpdateSectionBlock<LanguageDTO>(dto, model.FormMode, SectionNames.Language);
-
-            return Ok(new { formid = "#" + model.FormId, id = model.LanguageId, mode = Convert.ToInt32(model.FormMode) });
-        }
-
-        [HttpPost("skill")]
-        public IActionResult NewSkill([FromBody]SkillModel model)
+        [AcceptVerbs("POST","PUT")]
+        [Route("skill")]
+        public IActionResult Skill([FromBody]SkillModel model)
         {
             SkillDTO dto = Mapping.Mapper.Map<SkillModel,SkillDTO>(model);
             _curriculumService.AddOrUpdateSectionBlock<SkillDTO>(dto, model.FormMode, SectionNames.Skill);
 
-            return Ok(new { formid = "#" + model.FormId, id = model.SkillId, mode = Convert.ToInt32(model.FormMode) });
+            return Ok(new { id = model.SkillId });
         }
 
-        [HttpPut("skill")]
-        public IActionResult UpdateSkill([FromBody]SkillModel model)
-        {
-            SkillDTO dto = Mapping.Mapper.Map<SkillModel,SkillDTO>(model);
-            _curriculumService.AddOrUpdateSectionBlock<SkillDTO>(dto, model.FormMode, SectionNames.Skill);
-
-            return Ok(new { formid = "#" + model.FormId, id = model.SkillId, mode = Convert.ToInt32(model.FormMode) });
-        }
-
-        [HttpPost("interest")]
-        public IActionResult NewInterest([FromBody]InterestModel model)
+        [AcceptVerbs("POST","PUT")]
+        [Route("interest")]
+        public IActionResult Interest([FromBody]InterestModel model)
         {
             InterestDTO dto = Mapping.Mapper.Map<InterestModel,InterestDTO>(model);
             _curriculumService.AddOrUpdateSectionBlock<InterestDTO>(dto, model.FormMode, SectionNames.Interest);
 
-            return Ok(new { formid = "#" + model.FormId, id = model.InterestId, mode = Convert.ToInt32(model.FormMode) });
+            return Ok(new { id = model.InterestId });
         }
 
-        [HttpPut("interest")]
-        public IActionResult UpdateInterest([FromBody]InterestModel model)
-        {
-            InterestDTO dto = Mapping.Mapper.Map<InterestModel,InterestDTO>(model);
-            _curriculumService.AddOrUpdateSectionBlock<InterestDTO>(dto, model.FormMode, SectionNames.Interest);
-
-            return Ok(new { formid = "#" + model.FormId, id = model.InterestId, mode = Convert.ToInt32(model.FormMode) });
-        }
-
-        [HttpPost("personalReference")]
-        public IActionResult NewPersonalReference([FromBody]PersonalReferenceModel model)
+        [AcceptVerbs("POST","PUT")]
+        [Route("personalReference")]
+        public IActionResult PersonalReference([FromBody]PersonalReferenceModel model)
         {
             PersonalReferenceDTO dto = Mapping.Mapper.Map<PersonalReferenceModel,PersonalReferenceDTO>(model);
             _curriculumService.AddOrUpdateSectionBlock<PersonalReferenceDTO>(dto, model.FormMode, SectionNames.PersonalReference);
 
-            return Ok(new { formid = "#" + model.FormId, id = model.PersonalReferenceId, mode = Convert.ToInt32(model.FormMode) });
+            return Ok(new { id = model.PersonalReferenceId });
         }
 
-        [HttpPut("personalReference")]
-        public IActionResult UpdatePersonalReference([FromBody]PersonalReferenceModel model)
-        {
-            PersonalReferenceDTO dto = Mapping.Mapper.Map<PersonalReferenceModel,PersonalReferenceDTO>(model);
-            _curriculumService.AddOrUpdateSectionBlock<PersonalReferenceDTO>(dto, model.FormMode, SectionNames.PersonalReference);
-
-            return Ok(new { formid = "#" + model.FormId, id = model.PersonalReferenceId, mode = Convert.ToInt32(model.FormMode) });
-        }
-
-        [HttpPost("customSection")]
-        public IActionResult NewCustomSection([FromBody]CustomSectionModel model)
+        [AcceptVerbs("POST","PUT")]
+        [Route("customSection")]
+        public IActionResult CustomSection([FromBody]CustomSectionModel model)
         {
             CustomSectionDTO dto = Mapping.Mapper.Map<CustomSectionModel,CustomSectionDTO>(model);
             _curriculumService.AddOrUpdateSectionBlock<CustomSectionDTO>(dto, model.FormMode, SectionNames.CustomSection);
 
-            return Ok(new { formid = "#" + model.FormId, id = model.CustomSectionId, mode = Convert.ToInt32(model.FormMode) });
-        }
-
-        [HttpPut("customSection")]
-        public IActionResult UpdateCustomSection([FromBody]CustomSectionModel model)
-        {
-            CustomSectionDTO dto = Mapping.Mapper.Map<CustomSectionModel,CustomSectionDTO>(model);
-            _curriculumService.AddOrUpdateSectionBlock<CustomSectionDTO>(dto, model.FormMode, SectionNames.CustomSection);
-
-            return Ok(new { formid = "#" + model.FormId, id = model.CustomSectionId, mode = Convert.ToInt32(model.FormMode) });
+            return Ok(new { id = model.CustomSectionId });
         }
 
         [HttpGet("ready")]
