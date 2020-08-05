@@ -142,11 +142,11 @@ namespace CVBuilder.Service.Services
             sectionService.GetType().GetMethod("Delete").Invoke(sectionService, parameters);
         }
 
-        public void ToggleSectionVisibility(SectionNames section, string email)
+        public void ToggleSectionVisibility(SectionNames name, string email)
         {
             var userId = _UnitOfWork.User.GetUserIdByEmail(email);
             var curriculumId = _UnitOfWork.Curriculum.GetIdByUserId(userId);
-            var sectionService = this.GetCurrentSectionService(section);
+            var sectionService = this.GetCurrentSectionService(name);
             object[] parameters = { curriculumId };
             sectionService.GetType().GetMethod("ToggleVisibility").Invoke(sectionService, parameters);
         }

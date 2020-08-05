@@ -26,33 +26,38 @@ namespace CVBuilder.WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetCurriculum()
         {
             BuildDTO dto = _curriculumService.GetContent(User.Identity.Name);
             return Ok(dto);
         }
 
-        [HttpGet("section/{name}/{id}")]
-        public IActionResult GetSectionBlock(SectionNames name, int id)
+        [HttpGet("block/{sectionName}/{id}")]
+        public IActionResult GetSectionBlock(SectionNames sectionName, int id)
         {
-            SummaryBlockDTO dto = _curriculumService.GetSectionBlock(name, id);
+            SummaryBlockDTO dto = _curriculumService.GetSectionBlock(sectionName, id);
             return Ok(dto);
         }
 
-        [HttpDelete("section/{name}/{id}")]
-        public IActionResult DeleteSectionBlock(SectionNames name, int id)
+        [HttpDelete("block/{sectionName}/{id}")]
+        public IActionResult DeleteSectionBlock(SectionNames sectionName, int id)
         {
-            _curriculumService.DeleteSectionBlock(name, id);
+            _curriculumService.DeleteSectionBlock(sectionName, id);
             return Ok(new { message = "Bloque de sección eliminado." });
         }
 
-        [HttpPost("personalDetail")]
-        public IActionResult NewPersonalDetail([FromBody]PersonalDetailModel model)
+        [HttpGet("section/{name}/{id}")]
+        public IActionResult SectionFormData(SectionNames name, int id)
         {
-            PersonalDetailDTO dto = Mapping.Mapper.Map<PersonalDetailModel,PersonalDetailDTO>(model);
-            _curriculumService.AddOrUpdateSectionBlock<PersonalDetailDTO>(dto, model.FormMode, SectionNames.PersonalDetail);
-
-            return Ok("Cambios guardados.");
+            try
+            {
+                dynamic sectionFormData = _curriculumService.GetSectionFormData(name, id);
+                return Ok(sectionFormData);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpPut("personalDetail")]
@@ -62,20 +67,6 @@ namespace CVBuilder.WebAPI.Controllers
             _curriculumService.AddOrUpdateSectionBlock<PersonalDetailDTO>(dto, model.FormMode, SectionNames.PersonalDetail);
 
             return Ok(new { message = "Detalles personales actualizados."});
-        }
-
-        [HttpGet("study/{section}/{id}")]
-        public IActionResult GetStudy(SectionNames section, int id)
-        {
-            try
-            {
-                dynamic sectionFormData = _curriculumService.GetSectionFormData(section, id);
-                return Ok(sectionFormData);
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
         }
 
         [AcceptVerbs("POST","PUT")]
@@ -179,10 +170,10 @@ namespace CVBuilder.WebAPI.Controllers
                 return BadRequest(new { Message = "No se ha podido cambiar la plantilla. Causa: ruta de plantilla incorrecta." });
         }
 
-        [HttpPost("visibility/{name}")]
-        public void ToggleSectionVisibility(SectionNames name)
+        [HttpPut("visibility/{sectionName}")]
+        public void ToggleSectionVisibility(SectionNames sectionName)
         {
-            _curriculumService.ToggleSectionVisibility(name, User.Identity.Name);
+            _curriculumService.ToggleSectionVisibility(sectionName, User.Identity.Name);
         }
     }
 }

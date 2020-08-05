@@ -25,7 +25,7 @@ namespace CVBuilder.Service.Services
             _tokenManagement = tokenManagement.Value;
         }
 
-        public int Create(RegisterDTO dto)
+        public void Create(RegisterDTO dto)
         {
             int newUserId = _UnitOfWork.User.Create(dto);
             int newCurriculumId = _UnitOfWork.Curriculum.Create(newUserId);
@@ -38,8 +38,6 @@ namespace CVBuilder.Service.Services
                 SummaryIsVisible = true,
                 Id_Curriculum = newCurriculumId
             });
-
-            return 1;
         }
 
         public bool IsAuthenticated(string email, string password, out UserDTO userInfo)
@@ -76,7 +74,7 @@ namespace CVBuilder.Service.Services
             string savedRefreshToken = this.GetRefreshToken(userId, refreshToken);
             
             if (savedRefreshToken != refreshToken)
-                throw new SecurityTokenException("Token de renovación expirado/incorrecto. Vuelva a iniciar sesión.");
+                throw new SecurityTokenException("Su sesión ha caducado.");
 
             IEnumerable<Claim> claimsCopied = new []
             {
