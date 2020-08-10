@@ -53,7 +53,7 @@ namespace CVBuilder.Service.Services
                 new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
                 new Claim(ClaimTypes.Email, userInfo.Email),
                 new Claim(ClaimTypes.Name, userInfo.Email),
-                new Claim(JwtUserClaims.PHOTO, userInfo.Photo),
+                //new Claim(JwtUserClaims.PHOTO, userInfo.Photo),
                 new Claim(JwtUserClaims.ACCESS_DATE, userInfo.AccessDate)
             };
 
@@ -81,7 +81,7 @@ namespace CVBuilder.Service.Services
                 new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
                 new Claim(ClaimTypes.Email, email),
                 new Claim(ClaimTypes.Name, email),
-                new Claim(JwtUserClaims.PHOTO, claimsPrincipal.FindFirstValue(JwtUserClaims.PHOTO)),
+                //new Claim(JwtUserClaims.PHOTO, claimsPrincipal.FindFirstValue(JwtUserClaims.PHOTO)),
                 new Claim(JwtUserClaims.ACCESS_DATE, claimsPrincipal.FindFirstValue(JwtUserClaims.ACCESS_DATE))
             };
             string newToken = this.GenerateToken(userId, claimsCopied, DateTime.Now);

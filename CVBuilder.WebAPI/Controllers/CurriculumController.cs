@@ -61,7 +61,7 @@ namespace CVBuilder.WebAPI.Controllers
         }
 
         [HttpPut("personalDetail")]
-        public IActionResult UpdatePersonalDetail([FromBody]PersonalDetailModel model)
+        public IActionResult UpdatePersonalDetail([FromForm]PersonalDetailModel model)
         {
             PersonalDetailDTO dto = Mapping.Mapper.Map<PersonalDetailModel,PersonalDetailDTO>(model);
             _curriculumService.AddOrUpdateSectionBlock<PersonalDetailDTO>(dto, model.FormMode, SectionNames.PersonalDetail);

@@ -10,15 +10,15 @@ namespace CVBuilder.WebAPI.Validators
     public class PostedFileExtensionsAttribute : ValidationAttribute
     {
         private const string DefaultErrorMessage = "Extensión de archivo no permitida.";
-        private readonly string[] _extensions;
+        private readonly string[] _mimeTypes;
 
         /// <summary>
-        /// Extensiones de archivo permitidas (separadas por coma).
+        /// Extensiones tipo MIME de archivo permitidas (separadas por coma).
         /// </summary>
-        /// <param name="extensions"></param>
-        public PostedFileExtensionsAttribute(string extensions) : base (DefaultErrorMessage)
+        /// <param name="mimeTypes"></param>
+        public PostedFileExtensionsAttribute(string mimeTypes) : base (DefaultErrorMessage)
         {
-            _extensions = extensions.Split(',');
+            _mimeTypes = mimeTypes.Split(',');
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -26,10 +26,11 @@ namespace CVBuilder.WebAPI.Validators
             if(value != null)
             {
                 IFormFile currentValue = (IFormFile)value;
-                string extension = Path.GetExtension(currentValue.FileName).ToLower().Replace(".", "");
+                string mimeType = currentValue.ContentType;
+                //string extension = Path.GetExtension(currentValue.FileName).ToLower().Replace(".", "");
 
-                if (!_extensions.Contains(extension))
-                    return new ValidationResult(FormatErrorMessage(currentValue.FileName));
+                if (!_mimeTypes.Contains(mimeType))
+                    return new ValidationResult(FormatErrorMessage(currentValue.ContentType));
             }
 
             return ValidationResult.Success;

@@ -25,7 +25,7 @@ namespace CVBuilder.WebAPI.Models
 
         public string Profession { get; set; }
 
-        [PostedFileExtensions("jpg,jpeg,png", ErrorMessage = ErrorMessages.POSTED_FILE_EXTENSIONS)]
+        [PostedFileExtensions("image/jpeg,image/png", ErrorMessage = ErrorMessages.POSTED_FILE_EXTENSIONS)]
         [MaxFileSize(1048576)]
         public IFormFile UploadedPhoto { get; set; }
 

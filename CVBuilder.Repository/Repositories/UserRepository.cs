@@ -36,8 +36,8 @@ namespace CVBuilder.Repository.Repositories
                 dto = Mapping.Mapper.Map<User,UserDTO>(user, opts =>
                 {
                     opts.Items["AccessDate"] = accessDate;
-                    opts.Items["PhotoArray"] = personalDetail.Photo;
-                    opts.Items["PhotoMimeType"] = personalDetail.PhotoMimeType;
+                    //opts.Items["PhotoArray"] = personalDetail.Photo;
+                    //opts.Items["PhotoMimeType"] = personalDetail.PhotoMimeType;
                 });
                 userId = user.UserId;
 

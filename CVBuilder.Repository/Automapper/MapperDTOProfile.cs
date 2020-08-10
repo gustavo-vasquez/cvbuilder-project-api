@@ -13,14 +13,15 @@ namespace CVBuilder.Repository.Automapper
             CreateMap<User, UserDTO>(MemberList.Destination)
                 .ForMember(dest => dest.AccessDate, act => act.MapFrom(
                     (src,dest,destMember,context) =>
-                        ((System.DateTime)context.Items["AccessDate"]).ToString("dddd, dd MMMM yyyy HH:mm:ss")))
-                .ForMember(dest => dest.Photo, act => act.MapFrom(
+                        ((System.DateTime)context.Items["AccessDate"]).ToString("dddd, dd MMMM yyyy HH:mm:ss")));
+                /* .ForMember(dest => dest.Photo, act => act.MapFrom(
                     (src,dest,destMember,context) =>
                         ByteArrayToBase64((byte[])context.Items["PhotoArray"],(string)context.Items["PhotoMimeType"])
-                ));
+                )); */
 
             CreateMap<PersonalDetailDTO, PersonalDetail>()
                 .ForMember(dest => dest.Photo, act => act.MapFrom(src => src.UploadedPhoto))
+                .ForMember(dest => dest.PhotoMimeType, act => act.MapFrom(src => src.MimeType))
                 .ForMember(dest => dest.Curriculum, act => act.Ignore());
 
             CreateMap<PersonalDetail, PersonalDetailDTO>()
