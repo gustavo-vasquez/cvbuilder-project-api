@@ -4,10 +4,8 @@ namespace CVBuilder.WebAPI.Models
 {
     public class FinishedModel
     {
-        public int TemplateId { get; set; }
-        public string Name { get; set; }
-        public string PreviewPath { get; set; }
-        public PersonalDetailsDisplay PersonalDetails { get; set; }
+        public Core.DTOs.TemplateDTO Template { get; set; }
+        public PersonalDetailDisplay PersonalDetail { get; set; }
         public IEnumerable<StudiesDisplay> Studies { get; set; }
         public IEnumerable<WorkExperiencesDisplay> WorkExperiences { get; set; }
         public IEnumerable<CertificatesDisplay> Certificates { get; set; }
@@ -19,7 +17,7 @@ namespace CVBuilder.WebAPI.Models
         public SectionVisibilityModel SectionVisibility { get; set; }
     }
 
-    public class PersonalDetailsDisplay
+    public class PersonalDetailDisplay
     {
         public string Name { get; set; }
         public string LastName { get; set; }
@@ -44,7 +42,7 @@ namespace CVBuilder.WebAPI.Models
         public string Title { get; set; }
         public string Institute { get; set; }
         public string City { get; set; }
-        public string StateInTime { get; set; }
+        public string TimePeriod { get; set; }
         public string Description { get; set; }
         public bool IsVisible { get; set; }
     }
@@ -54,7 +52,7 @@ namespace CVBuilder.WebAPI.Models
         public string Job { get; set; }
         public string City { get; set; }
         public string Company { get; set; }
-        public string StateInTime { get; set; }
+        public string TimePeriod { get; set; }
         public string Description { get; set; }
         public bool IsVisible { get; set; }
     }

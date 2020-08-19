@@ -113,6 +113,10 @@ namespace CVBuilder.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
             // Make sure you call this before calling app.UseMvc()
             app.UseCors(

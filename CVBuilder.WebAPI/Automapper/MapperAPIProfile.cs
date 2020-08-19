@@ -68,19 +68,19 @@ namespace CVBuilder.WebAPI.Automapper
 
             CreateMap<SummaryBlockDTO, SummaryBlockModel>();
 
-            CreateMap<TemplateDTO, FinishedModel>();
+            //CreateMap<TemplateDTO, FinishedModel>();
 
-            CreateMap<PersonalDetailDTO, PersonalDetailsDisplay>()
+            CreateMap<PersonalDetailDTO, PersonalDetailDisplay>()
                 .ForMember(dest => dest.Photo, act => act.MapFrom(src => src.Photo ?? GlobalVariables.DEFAULT_AVATAR_PATH))
                 .ForMember(dest => dest.LinePhone, act => act.MapFrom(src => src.LinePhone != null && src.AreaCodeLP != null ? "(+" + src.AreaCodeLP + ") " + src.LinePhone : null))
                 .ForMember(dest => dest.MobilePhone, act => act.MapFrom(src => src.MobilePhone != null && src.AreaCodeMP != null ? "(+" + src.AreaCodeMP + ") " + src.MobilePhone : null))
                 .ForMember(dest => dest.Location, act => act.MapFrom(src => GenerateLocation(src.Address, src.City, src.PostalCode)));
 
             CreateMap<StudyDTO, StudiesDisplay>()
-                .ForMember(dest => dest.StateInTime, act => act.MapFrom(src => GenerateTimePeriodCV(src.StartMonth, src.StartYear, src.EndMonth, src.EndYear)));
+                .ForMember(dest => dest.TimePeriod, act => act.MapFrom(src => GenerateTimePeriodCV(src.StartMonth, src.StartYear, src.EndMonth, src.EndYear)));
 
             CreateMap<WorkExperienceDTO, WorkExperiencesDisplay>()
-                .ForMember(dest => dest.StateInTime, act => act.MapFrom(src => GenerateTimePeriodCV(src.StartMonth, src.StartYear, src.EndMonth, src.EndYear)));
+                .ForMember(dest => dest.TimePeriod, act => act.MapFrom(src => GenerateTimePeriodCV(src.StartMonth, src.StartYear, src.EndMonth, src.EndYear)));
 
             CreateMap<CertificateDTO, CertificatesDisplay>();
 

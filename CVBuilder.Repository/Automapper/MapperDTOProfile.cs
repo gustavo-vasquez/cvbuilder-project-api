@@ -77,7 +77,8 @@ namespace CVBuilder.Repository.Automapper
             if (file != null && file.Length > 0)
                 return System.String.Concat("data:", photoMimeType, ";base64,", System.Convert.ToBase64String(file));
 
-            return "https://www.gravatar.com/avatar/bd353396ae638ea35966c683cc56e1f6?s=48&d=identicon&r=PG";
+            //return "https://www.gravatar.com/avatar/bd353396ae638ea35966c683cc56e1f6?s=48&d=identicon&r=PG";
+            return "/assets/img/profile_coat.png";
         }
     }
 }

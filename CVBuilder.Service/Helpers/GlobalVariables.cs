@@ -14,7 +14,7 @@ namespace CVBuilder.Service.Helpers
 
         public static string GenerateTimePeriodFormat(string startMonth, int? startYear, string endMonth, int? endYear)
         {
-            string stateInTime = string.Empty;
+            string timePeriod = string.Empty;
 
             if (startMonth != MonthOptions.None && endMonth != MonthOptions.None)
             {
@@ -29,13 +29,13 @@ namespace CVBuilder.Service.Helpers
                             switch (endMonth)
                             {
                                 case MonthOptions.Present:
-                                    stateInTime = "(" + endMonthFormatted + ")";
+                                    timePeriod = "(" + endMonthFormatted + ")";
                                     break;
                                 case MonthOptions.OnlyYear:
-                                    stateInTime = "(" + endYear + ")";
+                                    timePeriod = "(" + endYear + ")";
                                     break;
                                 default:
-                                    stateInTime = "(" + endMonthFormatted + " " + endYear + ")";
+                                    timePeriod = "(" + endMonthFormatted + " " + endYear + ")";
                                     break;
                             }
                         }
@@ -46,13 +46,13 @@ namespace CVBuilder.Service.Helpers
                             switch (endMonth)
                             {
                                 case MonthOptions.Present:
-                                    stateInTime = "(" + startYear + "-" + endMonthFormatted + ")";
+                                    timePeriod = "(" + startYear + "-" + endMonthFormatted + ")";
                                     break;
                                 case MonthOptions.OnlyYear:
-                                    stateInTime = "(" + startYear + "-" + endYear + ")";
+                                    timePeriod = "(" + startYear + "-" + endYear + ")";
                                     break;
                                 default:
-                                    stateInTime = "(" + startYear + "-" + endMonthFormatted + " " + endYear + ")";
+                                    timePeriod = "(" + startYear + "-" + endMonthFormatted + " " + endYear + ")";
                                     break;
                             }
                         }
@@ -63,13 +63,13 @@ namespace CVBuilder.Service.Helpers
                             switch (endMonth)
                             {
                                 case MonthOptions.Present:
-                                    stateInTime = "(" + startMonthFormatted + " " + startYear + "-" + endMonthFormatted + ")";
+                                    timePeriod = "(" + startMonthFormatted + " " + startYear + "-" + endMonthFormatted + ")";
                                     break;
                                 case MonthOptions.OnlyYear:
-                                    stateInTime = "(" + startMonthFormatted + " " + startYear + "-" + endYear + ")";
+                                    timePeriod = "(" + startMonthFormatted + " " + startYear + "-" + endYear + ")";
                                     break;
                                 default:
-                                    stateInTime = "(" + startMonthFormatted + " " + startYear + "-" + endMonthFormatted + " " + endYear + ")";
+                                    timePeriod = "(" + startMonthFormatted + " " + startYear + "-" + endMonthFormatted + " " + endYear + ")";
                                     break;
                             }
                         }
@@ -77,7 +77,7 @@ namespace CVBuilder.Service.Helpers
                 }
             }
 
-            return stateInTime;
+            return timePeriod;
         }
     }
 }

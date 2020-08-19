@@ -155,7 +155,7 @@ namespace CVBuilder.WebAPI.Controllers
             int userId = System.Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             FinishedDTO dto = _curriculumService.GetContentReady(userId, _curriculumService.GetByUserId(userId));
 
-            return Ok(dto);
+            return Ok(Mapping.Mapper.Map<FinishedDTO, FinishedModel>(dto));
         }
 
         [HttpPut("template")]
@@ -165,7 +165,7 @@ namespace CVBuilder.WebAPI.Controllers
             string templateName = _templateService.ChangeTemplate(templatePathUrl, _curriculumService.GetByUserId(userId));
 
             if(templateName != null)
-                return Ok(new { Message = "La plantilla " + templateName + " se ha aplicado." });
+                return Ok(new { TemplateName = templateName, Message = "La plantilla " + templateName + " se ha aplicado." });
             else
                 return BadRequest(new { Message = "No se ha podido cambiar la plantilla. Causa: ruta de plantilla incorrecta." });
         }

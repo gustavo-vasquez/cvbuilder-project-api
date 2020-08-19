@@ -155,7 +155,7 @@ namespace CVBuilder.Service.Services
         {
             return new FinishedDTO()
             {
-                PersonalDetails = _UnitOfWork.PersonalDetail.GetByCurriculumId(curriculumId),
+                PersonalDetail = _UnitOfWork.PersonalDetail.GetByCurriculumId(curriculumId),
                 Studies = _UnitOfWork.Study.GetAllVisible(curriculumId),
                 WorkExperiences = _UnitOfWork.WorkExperience.GetAllVisible(curriculumId),
                 Certificates = _UnitOfWork.Certificate.GetAllVisible(curriculumId),
@@ -164,7 +164,7 @@ namespace CVBuilder.Service.Services
                 Skills = _UnitOfWork.Skill.GetAllVisible(curriculumId),
                 Interests = _UnitOfWork.Interest.GetAll(curriculumId),
                 CustomSections = _UnitOfWork.CustomSection.GetAllVisible(curriculumId),
-                Templates = _UnitOfWork.Template.GetByUserId(userId),
+                Template = _UnitOfWork.Template.GetByUserId(userId),
                 SectionVisibility = _UnitOfWork.Curriculum.GetIsVisibleStates(curriculumId)
             };
         }
