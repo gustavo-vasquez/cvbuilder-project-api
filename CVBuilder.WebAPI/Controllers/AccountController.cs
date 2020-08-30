@@ -53,13 +53,28 @@ namespace CVBuilder.WebAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("[action]")]
+        [HttpPut("token")]
         public IActionResult ExchangeToken([FromBody]ExchangeTokenModel model)
         {
             try
             {
                 ExchangeTokenDTO newTokens = _userService.ExchangeToken(model.Token, model.RefreshToken);
                 return Ok(newTokens);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpDelete("token")]
+        public IActionResult ClearRefreshToken([FromBody]UserDTO userInfo)
+        {
+            try
+            {
+                _userService.ClearRefreshToken(userInfo);
+                return Ok();
             }
             catch(Exception ex)
             {

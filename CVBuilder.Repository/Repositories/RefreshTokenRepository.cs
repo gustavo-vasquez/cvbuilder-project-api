@@ -11,25 +11,47 @@ namespace CVBuilder.Repository.Repositories
         {
         }
 
-        public void Create(int userId, string token, int expiryDate)
+        public void Create(int userId, string token, DateTime accessDate, int expiryDate)
         {
-            DateTime now = DateTime.Now;
-
             _context.RefreshTokens.Add(new RefreshToken()
             {
                 Token = token,
-                CreationDate = now,
-                ExpiryDate = now.AddMinutes(expiryDate),
+                CreationDate = accessDate,
+                ExpiryDate = accessDate.AddMinutes(expiryDate),
                 Id_User = userId
             });
+
             _context.SaveChanges();
         }
 
-        public void Delete(string token)
+        public void Update(int userId, string oldRefreshToken, string newRefreshToken, DateTime accessDate, int expiryDate)
         {
-            RefreshToken entity = _context.RefreshTokens.Single(t => t.Token == token);
-            _context.RefreshTokens.Remove(entity);
-            _context.SaveChanges();
+            try
+            {
+                RefreshToken currentRefreshToken = _context.RefreshTokens.Single(r => r.Token == oldRefreshToken && r.Id_User == userId);
+                currentRefreshToken.Token = newRefreshToken;
+                currentRefreshToken.CreationDate = accessDate;
+                currentRefreshToken.ExpiryDate = accessDate.AddMinutes(expiryDate);
+
+                _context.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public void Delete(int userId, string token)
+        {
+            RefreshToken entity = _context.RefreshTokens.SingleOrDefault(t => t.Id_User == userId && t.Token == token);
+
+            if(entity != null)
+            {
+                _context.RefreshTokens.Remove(entity);
+                _context.SaveChanges();
+            }
+            else
+                throw new ArgumentException("El token de refresco no existe o ya ha sido eliminado.");
         }
 
         public string GetByUserId(int userId, string refreshToken)

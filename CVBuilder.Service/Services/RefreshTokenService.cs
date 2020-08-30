@@ -12,9 +12,19 @@ namespace CVBuilder.Service.Services
             _UnitOfWork = unitOfWork;
         }
 
-        public void Create(int userId, string token, int expiryDate)
+        public void Create(int userId, string token, System.DateTime accessDate, int expiryDate)
         {
-            _UnitOfWork.RefreshToken.Create(userId, token, expiryDate);
+            _UnitOfWork.RefreshToken.Create(userId, token, accessDate, expiryDate);
+        }
+
+        public void Update(int userId, string oldRefreshToken, string newRefreshToken, System.DateTime accessDate, int expiryDate)
+        {
+            _UnitOfWork.RefreshToken.Update(userId, oldRefreshToken, newRefreshToken, accessDate, expiryDate);
+        }
+
+        public void Delete(int userId, string token)
+        {
+            _UnitOfWork.RefreshToken.Delete(userId, token);
         }
     }
 }

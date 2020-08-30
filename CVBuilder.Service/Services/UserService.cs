@@ -58,7 +58,7 @@ namespace CVBuilder.Service.Services
             };
 
             userInfo.Token = this.GenerateToken(userId, claims, accessDate);
-            userInfo.RefreshToken = this.GenerateRefreshToken(userId, _tokenManagement.RefreshExpiration);
+            userInfo.RefreshToken = this.GenerateRefreshToken(userId, accessDate, _tokenManagement.RefreshExpiration);
 
             return true;
         }
@@ -76,19 +76,39 @@ namespace CVBuilder.Service.Services
             if (savedRefreshToken != refreshToken)
                 throw new SecurityTokenException("Su sesión ha caducado.");
 
-            IEnumerable<Claim> claimsCopied = new []
+            DateTime newAccessDate = DateTime.Now;
+            string newAccessDateAsString = newAccessDate.ToString("dddd, dd MMMM yyyy HH:mm:ss");
+
+            IEnumerable<Claim> claimsCopy = new []
             {
                 new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
                 new Claim(ClaimTypes.Email, email),
                 new Claim(ClaimTypes.Name, email),
+                new Claim(JwtUserClaims.ACCESS_DATE, newAccessDateAsString)
                 //new Claim(JwtUserClaims.PHOTO, claimsPrincipal.FindFirstValue(JwtUserClaims.PHOTO)),
-                new Claim(JwtUserClaims.ACCESS_DATE, claimsPrincipal.FindFirstValue(JwtUserClaims.ACCESS_DATE))
+                //new Claim(JwtUserClaims.ACCESS_DATE, claimsPrincipal.FindFirstValue(JwtUserClaims.ACCESS_DATE))
             };
-            string newToken = this.GenerateToken(userId, claimsCopied, DateTime.Now);
-            string newRefreshToken = this.GenerateRefreshToken(userId, _tokenManagement.RefreshExpiration);
-            _UnitOfWork.RefreshToken.Delete(refreshToken);
 
-            return new ExchangeTokenDTO() { Token = newToken, RefreshToken = newRefreshToken };
+            string newToken = this.GenerateToken(userId, claimsCopy, DateTime.Now);
+            string newRefreshToken = this.GenerateRefreshToken(userId, savedRefreshToken, newAccessDate, _tokenManagement.RefreshExpiration);
+            //_UnitOfWork.RefreshToken.Delete(userId, refreshToken);
+
+            return new ExchangeTokenDTO()
+            {   
+                Token = newToken,
+                RefreshToken = newRefreshToken,
+                NewAccessDate = newAccessDateAsString
+            };
+        }
+
+        public void ClearRefreshToken(UserDTO userInfo)
+        {
+            int currentUserId = _UnitOfWork.User.GetUserIdByEmail(userInfo.Email);
+
+            if(currentUserId > 0)
+                _UnitOfWork.RefreshToken.Delete(currentUserId, userInfo.RefreshToken);
+            else
+                throw new ArgumentException("El usuario proporcionado no existe.");
         }
 
         public bool CurrentTokenIsValid(string token)
@@ -138,14 +158,28 @@ namespace CVBuilder.Service.Services
             return new JwtSecurityTokenHandler().WriteToken(jwtToken);
         }
 
-        private string GenerateRefreshToken(int userId, int expiryDate)
+        private string GenerateRefreshToken(int userId, DateTime accessDate, int expiryDate)
         {
             var randomNumber = new byte[32];
             using (var rng = RandomNumberGenerator.Create())
             {
                 rng.GetBytes(randomNumber);
                 string refreshToken = Convert.ToBase64String(randomNumber);
-                _UnitOfWork.RefreshToken.Create(userId, refreshToken, expiryDate);
+                _UnitOfWork.RefreshToken.Create(userId, refreshToken, accessDate, expiryDate);
+
+                return refreshToken;
+            }
+        }
+
+        private string GenerateRefreshToken(int userId, string oldRefreshToken, DateTime accessDate, int expiryDate)
+        {
+            var randomNumber = new byte[32];
+
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                string refreshToken = Convert.ToBase64String(randomNumber);
+                _UnitOfWork.RefreshToken.Update(userId, oldRefreshToken, refreshToken, accessDate, expiryDate);
 
                 return refreshToken;
             }
