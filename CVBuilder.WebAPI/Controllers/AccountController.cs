@@ -82,6 +82,9 @@ namespace CVBuilder.WebAPI.Controllers
             }
         }
 
+        [HttpGet("[action]")]
+        public void CheckToken() {}
+
         [AllowAnonymous]
         [HttpGet("[action]")]
         public IActionResult ValidToken(string token)
