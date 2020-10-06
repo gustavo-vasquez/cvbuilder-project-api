@@ -22,6 +22,7 @@ namespace CVBuilder.Repository.Repositories
                 LanguagesIsVisible = true,
                 PersonalReferencesIsVisible = true,
                 SkillsIsVisible = true,
+                StudiesIsVisible = true,
                 WorkExperiencesIsVisible = true,
                 Id_User = userId,
                 Id_Template = 1

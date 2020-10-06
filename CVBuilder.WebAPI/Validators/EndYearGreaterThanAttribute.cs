@@ -23,17 +23,22 @@ namespace CVBuilder.WebAPI.Validators
 
             var comparisonProperty = validationContext.ObjectType.GetProperty(_comparisonProperty);
             var endMonthProperty = validationContext.ObjectType.GetProperty("EndMonth");
+            var startMonthProperty = validationContext.ObjectType.GetProperty("StartMonth");
 
             if (comparisonProperty == null)
-                throw new ArgumentException("No existe una propiedad con este nombre.");
+                throw new ArgumentException("No existe una propiedad con el nombre " + _comparisonProperty + ".");
             if (endMonthProperty == null)
                 throw new ArgumentException("No existe la propiedad llamada EndMonth.");
+            if (startMonthProperty == null)
+                throw new ArgumentException("No existe la propiedad llamada StartMonth.");
 
             var comparisonValue = (int?)comparisonProperty.GetValue(validationContext.ObjectInstance);
             var endMonthValue = (string)endMonthProperty.GetValue(validationContext.ObjectInstance);
+            var startMonthValue = (string)startMonthProperty.GetValue(validationContext.ObjectInstance);
 
-            if (currentValue < comparisonValue && comparisonValue != 0 && endMonthValue != MonthOptions.Present)
-                return new ValidationResult(ErrorMessage);
+            if(endMonthValue != MonthOptions.NotShow && endMonthValue != MonthOptions.Present && startMonthValue != MonthOptions.NotShow)
+                if (currentValue < comparisonValue && comparisonValue != 0)
+                    return new ValidationResult(ErrorMessage);
 
             return ValidationResult.Success;
         }

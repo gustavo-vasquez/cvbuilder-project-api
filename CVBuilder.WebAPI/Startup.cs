@@ -55,15 +55,16 @@ namespace CVBuilder.WebAPI
             var token = Configuration.GetSection("tokenManagement").Get<TokenManagement>();
             var secret = System.Text.Encoding.UTF8.GetBytes(token.Secret);
 
-            services.AddAuthentication(x =>
+            services.AddAuthentication(options =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x =>
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
             {
-                x.RequireHttpsMetadata = true;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
+                options.RequireHttpsMetadata = true;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ClockSkew = TimeSpan.Zero,
                     ValidIssuer = token.Issuer,
@@ -74,7 +75,7 @@ namespace CVBuilder.WebAPI
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(token.Secret))
                 };
-                x.Events = new JwtBearerEvents
+                options.Events = new JwtBearerEvents
                 {
                     OnAuthenticationFailed = context =>
                     {

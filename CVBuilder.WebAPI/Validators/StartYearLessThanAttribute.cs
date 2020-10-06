@@ -21,14 +21,19 @@ namespace CVBuilder.WebAPI.Validators
             int? currentValue = (int?)value;
 
             var comparisonProperty = validationContext.ObjectType.GetProperty(_comparisonProperty);
+            var startMonthProperty = validationContext.ObjectType.GetProperty("StartMonth");
 
             if (comparisonProperty == null)
-                throw new ArgumentException("No existe una propiedad con este nombre.");
+                throw new ArgumentException("No existe una propiedad con el nombre " + _comparisonProperty + ".");
+            if (startMonthProperty == null)
+                throw new ArgumentException("No existe la propiedad llamada StartMonth.");
 
             var comparisonValue = (int?)comparisonProperty.GetValue(validationContext.ObjectInstance);
+            var startMonthValue = (string)startMonthProperty.GetValue(validationContext.ObjectInstance);
 
-            if (currentValue > comparisonValue && comparisonValue != 0)
-                return new ValidationResult(ErrorMessage);
+            if(startMonthValue != Service.Helpers.MonthOptions.NotShow)
+                if (currentValue > comparisonValue && comparisonValue != 0)
+                    return new ValidationResult(ErrorMessage);
 
             return ValidationResult.Success;
         }
