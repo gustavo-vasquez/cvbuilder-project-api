@@ -36,18 +36,19 @@ namespace CVBuilder.Repository.Repositories
 
         public int GetIdByUserId(int userId)
         {
-            return _context.Curriculum.SingleOrDefault(c => c.Id_User == userId).CurriculumId;
+            Curriculum curriculum = _context.Curriculum.FirstOrDefault(c => c.Id_User == userId);
+            return curriculum != null ? curriculum.CurriculumId : 0;
         }
 
         public CurriculumDTO GetById(int curriculumId)
         {
-            Curriculum entity = _context.Curriculum.SingleOrDefault(c => c.CurriculumId == curriculumId);
+            Curriculum entity = _context.Curriculum.FirstOrDefault(c => c.CurriculumId == curriculumId);
             return Mapping.Mapper.Map<Curriculum,CurriculumDTO>(entity);
         }
 
         public SectionVisibilityDTO GetIsVisibleStates(int curriculumId)
         {
-            Curriculum entity = _context.Curriculum.SingleOrDefault(c => c.CurriculumId == curriculumId);
+            Curriculum entity = _context.Curriculum.FirstOrDefault(c => c.CurriculumId == curriculumId);
             return Mapping.Mapper.Map<Curriculum,SectionVisibilityDTO>(entity);
         }
     }

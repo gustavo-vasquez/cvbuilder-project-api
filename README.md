@@ -65,5 +65,8 @@ IMPRIME O DESCARGA COMO PDF
 |----------|:-------------:|-------|
 | ![CVBuilder-Tabs](https://github.com/gustavo-vasquez/cvbuilder-project-ui/blob/master/public/assets/img/previews/13-classic.jpg) |  ![CVBuilder-Tabs](https://github.com/gustavo-vasquez/cvbuilder-project-ui/blob/master/public/assets/img/previews/14-elegant.jpg) | ![CVBuilder-Tabs](https://github.com/gustavo-vasquez/cvbuilder-project-ui/blob/master/public/assets/img/previews/15-modern.jpg) |
 
+## Notas
+Cambiar la cadena de conexión en el archivo "appsettings.Development.json" por la propia y ejecutar el comando 'dotnet ef database update' para crear la base de datos.
+
 ## Autor
 Gustavo Vasquez

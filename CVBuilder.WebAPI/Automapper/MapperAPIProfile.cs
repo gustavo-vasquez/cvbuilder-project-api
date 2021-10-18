@@ -140,7 +140,7 @@ namespace CVBuilder.WebAPI.Automapper
         {
             string timePeriod = GlobalVariables.GenerateTimePeriodFormat(startMonth, startYear, endMonth, endYear);
 
-            return timePeriod.Substring(1, timePeriod.Length - 2);
+            return !string.IsNullOrWhiteSpace(timePeriod) ? timePeriod.Substring(1, timePeriod.Length - 2) : timePeriod;
         }
     }
 }

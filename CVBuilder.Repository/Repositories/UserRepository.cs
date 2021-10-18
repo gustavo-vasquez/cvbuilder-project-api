@@ -26,18 +26,13 @@ namespace CVBuilder.Repository.Repositories
 
         public bool IsValidUser(string email, string password, out UserDTO dto, out int userId, System.DateTime accessDate)
         {
-            User user = _context.Users.Where(u => u.Email == email && u.Password == password).SingleOrDefault();
+            User user = _context.Users.Where(u => u.Email == email && u.Password == password).FirstOrDefault();
 
             if (user != null)
             {
-                int curriculumId = _context.Curriculum.Where(c => c.Id_User == user.UserId).SingleOrDefault().CurriculumId;
-                var personalDetail = _context.PersonalDetails.Where(d => d.Id_Curriculum == curriculumId).SingleOrDefault();
-                
                 dto = Mapping.Mapper.Map<User,UserDTO>(user, opts =>
                 {
                     opts.Items["AccessDate"] = accessDate;
-                    //opts.Items["PhotoArray"] = personalDetail.Photo;
-                    //opts.Items["PhotoMimeType"] = personalDetail.PhotoMimeType;
                 });
                 userId = user.UserId;
 

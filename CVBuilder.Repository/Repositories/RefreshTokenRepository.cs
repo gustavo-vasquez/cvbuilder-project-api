@@ -43,7 +43,7 @@ namespace CVBuilder.Repository.Repositories
 
         public void Delete(int userId, string token)
         {
-            RefreshToken entity = _context.RefreshTokens.SingleOrDefault(t => t.Id_User == userId && t.Token == token);
+            RefreshToken entity = _context.RefreshTokens.FirstOrDefault(t => t.Id_User == userId && t.Token == token);
 
             if(entity != null)
             {
@@ -56,7 +56,7 @@ namespace CVBuilder.Repository.Repositories
 
         public string GetByUserId(int userId, string refreshToken)
         {
-            RefreshToken entity = _context.RefreshTokens.SingleOrDefault(t => t.Id_User == userId && t.Token == refreshToken && t.ExpiryDate > DateTime.Now);
+            RefreshToken entity = _context.RefreshTokens.FirstOrDefault(t => t.Id_User == userId && t.Token == refreshToken && t.ExpiryDate > DateTime.Now);
             return entity != null ? entity.Token : null;
         }
     }

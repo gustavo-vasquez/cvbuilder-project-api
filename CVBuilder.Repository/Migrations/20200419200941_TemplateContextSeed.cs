@@ -9,17 +9,17 @@ namespace CVBuilder.Repository.Migrations
             migrationBuilder.InsertData(
                 table: "Templates",
                 columns: new[] { "TemplateId", "Name", "Path" },
-                values: new object[] { 1, "Classic", "/img/templates/classic.png" });
+                values: new object[] { 1, "Classic", "/assets/img/templates/classic.png" });
 
             migrationBuilder.InsertData(
                 table: "Templates",
                 columns: new[] { "TemplateId", "Name", "Path" },
-                values: new object[] { 2, "Elegant", "/img/templates/elegant.png" });
+                values: new object[] { 2, "Elegant", "/assets/img/templates/elegant.png" });
 
             migrationBuilder.InsertData(
                 table: "Templates",
                 columns: new[] { "TemplateId", "Name", "Path" },
-                values: new object[] { 3, "Modern", "/img/templates/modern.png" });
+                values: new object[] { 3, "Modern", "/assets/img/templates/modern.png" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

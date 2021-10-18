@@ -18,7 +18,7 @@ namespace CVBuilder.Repository.Repositories
                                 join cv in _context.Curriculum
                                 on tem.TemplateId equals cv.Id_Template
                                 where cv.Id_User == userId
-                                select tem).SingleOrDefault();
+                                select tem).FirstOrDefault();
 
             if (template != null)
                 return Mapping.Mapper.Map<Template,TemplateDTO>(template);
@@ -32,14 +32,14 @@ namespace CVBuilder.Repository.Repositories
                                 join cv in _context.Curriculum
                                 on tem.TemplateId equals cv.Id_Template
                                 where cv.Id_User == userId
-                                select tem).SingleOrDefault();
+                                select tem).FirstOrDefault();
 
             return template != null ? template.Path : "/img/templates/classic.png";
         }
 
         public string ChangeTemplate(string path, int curriculumId)
         {
-            Template template = _context.Templates.SingleOrDefault(t => t.Path == path);
+            Template template = _context.Templates.FirstOrDefault(t => t.Path == path);
 
             if (template != null)
             {

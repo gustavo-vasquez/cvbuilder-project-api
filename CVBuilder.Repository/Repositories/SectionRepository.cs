@@ -75,7 +75,7 @@ namespace CVBuilder.Repository.Repositories
 
         public void ToggleVisibility(string sectionIsVisible, int curriculumId)
         {
-            Curriculum curriculum = _context.Curriculum.SingleOrDefault(c => c.CurriculumId == curriculumId);
+            Curriculum curriculum = _context.Curriculum.FirstOrDefault(c => c.CurriculumId == curriculumId);
             var propertyInfo = curriculum.GetType().GetProperty(sectionIsVisible);
             propertyInfo.SetValue(curriculum, !(bool)propertyInfo.GetValue(curriculum));
             _context.SaveChanges();
